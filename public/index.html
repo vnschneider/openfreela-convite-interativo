@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Proposta Baile de Máscaras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Cinzel:wght@500;600&family=Pinyon+Script&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: deck of full-height slides; editorial split on content slides, bezel-framed objects; dark velvet ballroom, gold as the one accent */
+:root{
+  --night:#0f0a10; --velvet:#1b111c; --velvet-2:#271828; --plum:#3a2236; --wine:#7d2442;
+  --gold:#d6b26c; --gold-2:#f2dda4; --ink:#f6eee2; --muted:#b4a39f; --soft:rgba(242,221,164,.10); --hair:rgba(242,221,164,.16);
+  --pix:#4fd1a5;
+  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-label:"Cinzel","Trajan Pro",Georgia,serif;
+  --f-script:"Pinyon Script","Snell Roundhand",cursive;
+  --f-body:"Jost","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --ease:cubic-bezier(.32,.72,0,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-snap-type:y proximity;scroll-behavior:smooth;background:var(--night)}
+body{background:var(--night);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;font-weight:300;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--night)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+h2{font-family:var(--f-display);font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.08;letter-spacing:-.01em;color:var(--ink)}
+h2 em{font-style:italic;color:var(--gold-2)}
+h3{font-family:var(--f-display);font-size:1.3rem;line-height:1.2;color:var(--gold-2)}
+p{margin:0}
+.muted{color:var(--muted)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
+.ico{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* eyebrow pill */
+.eyebrow{justify-self:start;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair);background:var(--soft);border-radius:999px;padding:6px 14px 6px 10px;
+  font-family:var(--f-label);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.eyebrow .ico{width:15px;height:15px}
+
+/* bezel */
+.bezel{border-radius:28px;padding:6px;background:linear-gradient(180deg,rgba(242,221,164,.14),rgba(242,221,164,.03));border:1px solid rgba(242,221,164,.10)}
+.core{border-radius:22px;background:linear-gradient(180deg,var(--velvet-2),var(--velvet));box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 30px 60px -30px rgba(0,0,0,.7);height:100%}
+
+/* slides */
+.slide{min-height:100dvh;scroll-snap-align:start;position:relative;display:flex;align-items:center;overflow:hidden;
+  padding-block:96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.slide::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 50% at var(--gx,80%) var(--gy,10%),rgba(125,36,66,.35),transparent 70%),radial-gradient(40% 40% at 10% 90%,rgba(214,178,108,.07),transparent 70%)}
+.slide:nth-child(2n){--gx:15%;--gy:15%}
+.wrap{position:relative;z-index:1;width:100%;max-width:1160px;margin:0 auto;display:grid;gap:32px;min-width:0}
+.head{display:grid;gap:18px;max-width:760px}
+.lead{max-width:60ch;font-size:1.1rem;color:var(--muted)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+@media (max-width:860px){.split{grid-template-columns:1fr;gap:40px}.slide{padding-block:72px}}
+
+/* entry choreography: resting state visible; plays when a slide becomes active */
+.slide.play .rise{animation:rise 1s var(--ease) both}
+.slide.play .rise.d1{animation-delay:.08s}.slide.play .rise.d2{animation-delay:.16s}.slide.play .rise.d3{animation-delay:.24s}.slide.play .rise.d4{animation-delay:.32s}.slide.play .rise.d5{animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(28px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+
+/* nav */
+.dots{position:fixed;right:max(14px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);display:grid;gap:12px;z-index:20}
+.dots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(242,221,164,.3);padding:0;cursor:pointer;transition:transform .5s var(--ease),background .5s var(--ease)}
+.dots button[aria-current="true"]{background:var(--gold-2);transform:scale(1.6)}
+.counter{position:fixed;left:max(18px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;font-family:var(--f-label);font-size:.7rem;letter-spacing:.22em;color:var(--gold);font-variant-numeric:tabular-nums}
+@media (max-width:700px){.dots,.counter{display:none}}
+
+/* 1 opening */
+.hero{justify-items:center;text-align:center;gap:22px}
+.mask-svg{width:min(380px,82vw);height:auto;overflow:visible;filter:drop-shadow(0 20px 40px rgba(125,36,66,.5))}
+.mask-svg .stroke{fill:none;stroke:var(--gold-2);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:0}
+.slide.play .mask-svg .stroke{animation:draw 2.6s var(--ease) both}
+@keyframes draw{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
+.float{animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px) rotate(-1deg)}}
+.hero .kicker{font-family:var(--f-label);letter-spacing:.4em;font-size:.78rem;color:var(--gold);text-transform:uppercase}
+.hero h1{font-family:var(--f-display);font-size:clamp(3rem,9vw,7rem);line-height:.95;letter-spacing:-.02em;color:var(--ink)}
+.hero h1 em{font-style:italic;color:var(--gold-2)}
+.hero .script{font-family:var(--f-script);font-size:clamp(2.2rem,5.4vw,3.6rem);color:var(--gold-2);line-height:1;margin-top:-6px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair);border-radius:999px;padding:8px 14px;font-size:.88rem;color:var(--muted);background:rgba(15,10,16,.4)}
+.chip b{color:var(--ink);font-weight:500}
+.chip .ico{color:var(--gold)}
+.scroll-cue{margin-top:12px;display:grid;justify-items:center;gap:10px;border:0;background:none;cursor:pointer;color:var(--gold-2)}
+.scroll-cue .lbl{font-family:var(--f-label);font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.mouse{width:28px;height:44px;border:1.5px solid var(--gold-2);border-radius:16px;position:relative}
+.mouse::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--gold-2);animation:wheel 1.8s var(--ease) infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(-4px)}30%{opacity:1}100%{opacity:0;transform:translateY(14px)}}
+.chev{display:grid;gap:0;margin-top:-4px}
+.chev .ico{width:18px;height:18px;animation:chev 1.8s var(--ease) infinite}
+.chev .ico:nth-child(2){animation-delay:.18s;margin-top:-10px}
+@keyframes chev{0%,100%{opacity:.15;transform:translateY(-3px)}50%{opacity:1;transform:translateY(3px)}}
+.sparkles{position:absolute;inset:0;pointer-events:none;z-index:0}
+
+/* 2 about */
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.trio{grid-template-columns:1fr}}
+.feat .core{padding:26px;display:grid;gap:12px;align-content:start}
+.ibox{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(214,178,108,.22),rgba(214,178,108,.06));color:var(--gold-2);border:1px solid var(--hair)}
+.ibox .ico{width:24px;height:24px}
+.feat p{color:var(--muted);font-size:.98rem}
+.sign{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+.sign .script{font-family:var(--f-script);font-size:2.4rem;color:var(--gold-2);line-height:1}
+
+/* 3 requests */
+.req-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.req-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.req .core{padding:20px;display:grid;gap:14px;align-content:start;transition:transform .7s var(--ease)}
+.req:hover .core{transform:translateY(-4px)}
+.req .n{font-family:var(--f-label);font-size:.66rem;letter-spacing:.2em;color:var(--gold)}
+.req h3{font-size:1.15rem}
+.quote{font-family:var(--f-display);font-style:italic;font-size:clamp(1.1rem,2vw,1.35rem);color:var(--ink);max-width:56ch;border-left:1px solid var(--gold);padding-left:20px}
+.plus{display:flex;flex-wrap:wrap;gap:10px;align-items:center;color:var(--muted)}
+
+/* 4 phone */
+.tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;border:1px solid var(--hair);background:var(--soft);justify-self:start;flex-wrap:wrap}
+.tabs button{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;border-radius:999px;padding:9px 16px;cursor:pointer;font-size:.92rem;transition:background .5s var(--ease),color .5s var(--ease)}
+.tabs button[aria-selected="true"]{background:var(--gold-2);color:var(--night);font-weight:500}
+.moment{display:grid;gap:12px}
+.moment ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.moment li{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;color:var(--muted)}
+.moment li .ico{color:var(--gold);margin-top:3px;width:20px;height:20px}
+.stage{position:relative;justify-self:center;width:min(320px,82vw)}
+.stage::before{content:"";position:absolute;inset:8% -20% -6%;background:radial-gradient(closest-side,rgba(125,36,66,.6),transparent);filter:blur(20px);z-index:0}
+.phone{position:relative;z-index:1;width:100%;aspect-ratio:9/19.3;border-radius:50px;padding:11px;
+  background:linear-gradient(145deg,#4a3a44 0%,#16101a 40%,#2a1f28 100%);box-shadow:0 50px 90px -30px rgba(0,0,0,.85),inset 0 0 0 1.5px rgba(255,255,255,.12),inset 0 0 0 5px #0a070b}
+.phone::after{content:"";position:absolute;right:-3px;top:24%;width:3px;height:64px;border-radius:2px;background:#3a2c36}
+.screen{position:relative;width:100%;height:100%;border-radius:40px;overflow:hidden;background:#140c15}
+.sbar{position:absolute;inset:0 0 auto;height:44px;z-index:4;display:flex;justify-content:space-between;align-items:center;padding:0 22px 0 26px;font-size:.74rem;font-weight:600;color:#fff;
+  background:linear-gradient(#140c15 60%,rgba(20,12,21,0))}
+.sbar .r{display:flex;gap:5px;align-items:center}
+.sbar .ico{width:15px;height:15px;stroke-width:1.8}
+.island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:92px;height:26px;border-radius:14px;background:#000;z-index:5}
+.tabbar{position:absolute;inset:auto 0 0;z-index:4;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 10px 18px;background:rgba(20,12,21,.92);border-top:1px solid rgba(255,255,255,.06)}
+.tabbar span{display:grid;justify-items:center;gap:2px;font-size:.55rem;color:#8e7f86}
+.tabbar span.on{color:var(--gold-2)}
+.tabbar .ico{width:19px;height:19px}
+.home-ind{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:96px;height:4px;border-radius:2px;background:rgba(255,255,255,.55);z-index:5}
+.viewport{position:absolute;inset:44px 0 64px;overflow:hidden}
+.feed{padding:6px 12px 24px;display:grid;gap:12px;align-content:start;animation:feed var(--dur,16s) cubic-bezier(.65,0,.35,1) infinite}
+.stage:hover .feed,.stage:focus-within .feed{animation-play-state:paused}
+@keyframes feed{0%,10%{transform:translateY(0)}45%,58%{transform:translateY(calc(-1 * var(--travel,400px)))}92%,100%{transform:translateY(0)}}
+.a-hero{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/4.3;display:grid;place-items:end center;padding:14px;text-align:center;
+  background:radial-gradient(120% 70% at 50% 0,#6b2040 0%,#2a1424 55%,#130a13 100%)}
+.a-hero svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.a-hero .t{position:relative;display:grid;gap:2px}
+.a-hero small{font-family:var(--f-label);font-size:.5rem;letter-spacing:.28em;color:var(--gold)}
+.a-hero .nm{font-family:var(--f-script);font-size:2rem;color:var(--gold-2);line-height:1}
+.a-hero .dt{font-size:.62rem;color:#e6d7c6;letter-spacing:.06em}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.cd div{border-radius:12px;background:#22152a;border:1px solid rgba(242,221,164,.12);text-align:center;padding:7px 0}
+.cd b{display:block;font-family:var(--f-display);font-size:1.05rem;color:var(--gold-2);font-weight:500;line-height:1.1}
+.cd span{font-size:.5rem;color:#9d8d93;text-transform:uppercase;letter-spacing:.1em}
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.qa div{display:grid;justify-items:center;gap:5px;font-size:.56rem;color:#e9dccd;text-align:center}
+.qa i{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(180deg,#2e1d31,#1d121f);border:1px solid rgba(242,221,164,.16);color:var(--gold-2)}
+.qa i .ico{width:20px;height:20px}
+.sec{border-radius:18px;background:#1d121f;border:1px solid rgba(242,221,164,.09);padding:12px;display:grid;gap:9px;font-size:.66rem;color:#d8c9bb}
+.sec h4{margin:0;display:flex;justify-content:space-between;align-items:center;font-family:var(--f-display);font-weight:500;font-size:.86rem;color:var(--ink)}
+.sec h4 a{font-family:var(--f-body);font-size:.56rem;color:var(--gold);text-decoration:none}
+.story{display:flex;gap:8px;overflow:hidden}
+.story div{flex:none;width:76px;display:grid;gap:4px}
+.story .pic{height:92px;border-radius:12px;background:var(--g);position:relative;overflow:hidden}
+.story .pic::after{content:"";position:absolute;inset:auto 0 0;height:50%;background:linear-gradient(transparent,rgba(0,0,0,.5))}
+.story b{font-family:var(--f-display);color:var(--gold-2);font-weight:500;font-size:.7rem}
+.map{height:86px;border-radius:12px;position:relative;overflow:hidden;background:#2a1c2a}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.row{display:flex;gap:6px}
+.btn{flex:1;height:30px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:.6rem;font-weight:500;border:1px solid rgba(242,221,164,.2);color:#eadccb}
+.btn.solid{background:var(--gold-2);color:#1a0f1a;border-color:var(--gold-2);font-weight:600}
+.btn .ico{width:13px;height:13px}
+.inp{height:30px;border-radius:10px;background:#2a1b2c;display:flex;align-items:center;padding:0 10px;color:#9d8d93;font-size:.62rem;gap:6px}
+.inp .ico{width:13px;height:13px}
+.step{display:flex;justify-content:space-between;align-items:center}
+.step .ctl{display:flex;align-items:center;gap:8px}
+.step .ctl span{width:22px;height:22px;border-radius:50%;border:1px solid rgba(242,221,164,.3);display:grid;place-items:center;color:var(--gold-2)}
+.gifts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.gift{border-radius:12px;background:#2a1b2c;overflow:hidden}
+.gift .pic{height:56px;background:var(--g);display:grid;place-items:center;color:rgba(255,255,255,.85)}
+.gift .pic .ico{width:22px;height:22px}
+.gift div{padding:6px 8px;display:grid}
+.gift b{color:var(--gold-2);font-weight:600}
+.pixcard{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center}
+.qr{width:62px;height:62px;border-radius:8px;background:#f6eee2;padding:5px}
+.qr svg{width:100%;height:100%}
+.cam{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:3/4;background:radial-gradient(80% 60% at 50% 30%,#5c3a3a,#211320 70%)}
+.cam svg{position:absolute;inset:0;width:100%;height:100%}
+.cam .top{position:absolute;inset:8px 8px auto;display:flex;justify-content:space-between;color:#fff;font-size:.56rem;z-index:2}
+.cam .top span{display:inline-flex;align-items:center;gap:4px;background:rgba(0,0,0,.45);padding:3px 7px;border-radius:999px}
+.cam .top .ico{width:11px;height:11px}
+.camctl{display:flex;justify-content:space-between;align-items:center;padding:0 8px}
+.thumb{width:36px;height:36px;border-radius:10px;background:var(--g)}
+.shutter{width:58px;height:58px;border-radius:50%;border:3px solid var(--gold-2);display:grid;place-items:center}
+.shutter::after{content:"";width:44px;height:44px;border-radius:50%;background:#f6eee2}
+.flip{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#2a1b2c;color:#eadccb}
+.flip .ico{width:17px;height:17px}
+.film{display:flex;gap:3px}
+.film i{flex:1;height:5px;border-radius:2px;background:var(--gold-2)}
+.film i.u{background:#3a2a3c}
+.live{display:flex;align-items:center;gap:6px;color:var(--pix);font-weight:600;font-size:.58rem;letter-spacing:.08em}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pix);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.2}}
+.masonry{columns:3;column-gap:5px}
+.masonry div{break-inside:avoid;margin-bottom:5px;border-radius:8px;background:var(--g)}
+.reveal{display:grid;gap:4px;text-align:center;padding:14px 8px;border-radius:18px;background:linear-gradient(180deg,#3a1d30,#1d121f);border:1px solid rgba(242,221,164,.14)}
+.reveal .nm{font-family:var(--f-script);font-size:1.7rem;color:var(--gold-2);line-height:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center}
+.stats b{display:block;font-family:var(--f-display);color:var(--gold-2);font-size:1rem;font-weight:500}
+.note{border-radius:12px;background:#2a1b2c;padding:8px 10px;display:grid;gap:2px;font-size:.64rem;color:#d8c9bb;line-height:1.4}
+.note b{color:var(--gold-2);font-weight:500;font-size:.58rem}
+.hint{font-size:.85rem;color:var(--muted);display:flex;gap:8px;align-items:center}
+.hint .ico{color:var(--gold)}
+
+/* 5 ballroom */
+.hall-grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:22px;align-items:stretch}
+@media (max-width:900px){.hall-grid{grid-template-columns:1fr}}
+.hall-frame .core{padding:0;overflow:hidden;position:relative}
+.hall{width:100%;height:auto;display:block}
+.hot{cursor:pointer}
+.hot .pulse{fill:none;stroke:var(--gold-2);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:pulse 2.2s var(--ease) infinite}
+.hot .core-c{fill:rgba(15,10,16,.75);stroke:var(--gold-2);stroke-width:1.6;transition:fill .4s var(--ease)}
+.hot .plus-i{stroke:var(--gold-2);stroke-width:2;stroke-linecap:round;transition:transform .5s var(--ease);transform-box:fill-box;transform-origin:center}
+.hot:hover .core-c,.hot.on .core-c{fill:var(--gold-2)}
+.hot:hover .plus-i,.hot.on .plus-i{stroke:var(--night)}
+.hot.on .plus-i{transform:rotate(45deg)}
+.hot.seen .pulse{animation:none;opacity:0}
+.hot:focus{outline:none}
+.hot:focus-visible .core-c{stroke-width:4}
+@keyframes pulse{from{transform:scale(1);opacity:.9}to{transform:scale(2.4);opacity:0}}
+.tip{position:absolute;left:16px;bottom:14px;display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--ink);background:rgba(15,10,16,.7);border:1px solid var(--hair);border-radius:999px;padding:6px 12px;pointer-events:none}
+.tip .ico{color:var(--gold-2)}
+.info .core{padding:26px;display:grid;gap:14px;align-content:start}
+.info .tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-label);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.info ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.info li{display:grid;grid-template-columns:20px 1fr;gap:10px;color:var(--muted);font-size:.96rem}
+.info li .ico{color:var(--pix);margin-top:4px;width:17px;height:17px}
+.prog{display:grid;gap:8px}
+.bar{height:4px;border-radius:2px;background:var(--hair);overflow:hidden}
+.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2));transform-origin:left;transform:scaleX(var(--p,0));transition:transform .8s var(--ease)}
+.prog span{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:6px}
+.legend button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);background:transparent;border-radius:999px;padding:6px 12px;font-size:.82rem;cursor:pointer;transition:background .4s var(--ease)}
+.legend button .ico{color:var(--gold);width:15px;height:15px}
+.legend button.on{background:var(--gold-2);color:var(--night)}
+.legend button.on .ico{color:var(--night)}
+.legend button.seen:not(.on){border-color:rgba(242,221,164,.45)}
+
+/* 6 packages */
+.pkhead{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:end;justify-content:space-between}
+.toggle{display:inline-flex;border:1px solid var(--hair);background:var(--soft);border-radius:999px;padding:4px;gap:4px;flex-wrap:wrap}
+.toggle button{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;border-radius:999px;padding:9px 16px;cursor:pointer;font-size:.92rem;transition:background .5s var(--ease)}
+.toggle button[aria-pressed="true"]{background:var(--gold-2);color:var(--night);font-weight:500}
+.packs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+@media (max-width:980px){.packs{grid-template-columns:1fr}}
+.pack .core{padding:26px;display:grid;gap:16px;align-content:start}
+.pack.star{background:linear-gradient(180deg,rgba(242,221,164,.45),rgba(242,221,164,.08))}
+.pack.star .core{background:linear-gradient(180deg,#3a1a2e,#1b111c 60%)}
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.ptop .ibox{width:42px;height:42px;border-radius:14px}
+.badge{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;background:var(--gold-2);color:var(--night);border-radius:999px;padding:4px 10px;font-weight:600}
+.pricebox{border-radius:18px;padding:16px;background:linear-gradient(160deg,rgba(79,209,165,.16),rgba(79,209,165,.03));border:1px solid rgba(79,209,165,.35);display:grid;gap:4px}
+.pixtag{justify-self:start;display:inline-flex;align-items:center;gap:6px;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#0f0a10;background:var(--pix);border-radius:999px;padding:4px 10px}
+.pixtag .ico{width:13px;height:13px;stroke-width:2}
+.pval{font-family:var(--f-display);font-size:clamp(2.1rem,3.4vw,2.6rem);line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums}
+.pval small{font-family:var(--f-body);font-size:.82rem;color:var(--muted);margin-left:6px}
+.plink{font-size:.86rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.plink s{color:var(--muted);opacity:.85}
+.save{font-size:.84rem;color:var(--pix);font-weight:500;font-variant-numeric:tabular-nums}
+.pack ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:.95rem}
+.pack li{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start}
+.pack li .ico{color:var(--gold);width:18px;height:18px;margin-top:3px}
+.pack li.new{color:var(--gold-2);font-weight:400}
+.pack li.new .ico{color:var(--pix)}
+.inc{font-size:.84rem;color:var(--gold);display:flex;gap:8px;align-items:center}
+.host-note{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;color:var(--muted);max-width:78ch}
+.host-note .ico{color:var(--gold);margin-top:4px}
+
+/* 7 extras */
+.extras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:980px){.extras{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.extras{grid-template-columns:1fr}}
+.extra .core{padding:22px;display:grid;gap:12px;align-content:start}
+.extra .val{font-family:var(--f-display);color:var(--gold-2);font-size:1.15rem}
+.extra p{color:var(--muted);font-size:.94rem}
+
+/* 8 timeline */
+.timeline{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;padding-top:44px}
+.timeline::before{content:"";position:absolute;top:21px;left:22px;right:22px;height:1px;background:var(--hair)}
+.timeline::after{content:"";position:absolute;top:21px;left:22px;right:22px;height:1px;background:linear-gradient(90deg,var(--gold),var(--gold-2));transform-origin:left}
+.slide.play .timeline::after{animation:grow 2.4s var(--ease) both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.tstep{position:relative;display:grid;gap:8px;align-content:start}
+.tstep .node{position:absolute;top:-44px;left:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--velvet-2);border:1px solid var(--gold);color:var(--gold-2)}
+.tstep.last .node{background:var(--gold-2);color:var(--night)}
+.tstep .node .ico{width:20px;height:20px}
+.tstep .d{margin-top:12px;font-family:var(--f-label);font-size:.78rem;letter-spacing:.14em;color:var(--gold);font-variant-numeric:tabular-nums}
+.tstep h3{font-size:1.2rem}
+.tstep p{color:var(--muted);font-size:.94rem}
+@media (max-width:760px){
+  .timeline{grid-template-columns:1fr;padding-top:0;padding-left:64px;gap:28px}
+  .timeline::before,.timeline::after{top:22px;bottom:22px;left:21px;right:auto;width:1px;height:auto}
+  .timeline::after{transform-origin:top}
+  .slide.play .timeline::after{animation-name:growy}
+  .tstep .node{top:0;left:-64px}
+  .tstep .d{margin-top:0}
+}
+@keyframes growy{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.callout .core{padding:18px 20px;display:flex;gap:14px;align-items:flex-start;color:var(--muted)}
+.callout .ico{color:var(--gold-2);width:22px;height:22px;margin-top:2px}
+
+/* 9 investment */
+.inv .core{padding:0;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font-variant-numeric:tabular-nums}
+th,td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--hair)}
+th{font-family:var(--f-label);font-weight:500;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+td{font-size:1rem}
+td.num,th.num{text-align:right}
+th.px,td.px{background:rgba(79,209,165,.07)}
+th.px{color:var(--pix)}
+td.px{color:var(--ink);font-weight:500}
+td.lk{color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td .pn{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:1.1rem;color:var(--ink)}
+td .pn .ico{color:var(--gold)}
+.paygrid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px}
+@media (max-width:900px){.paygrid{grid-template-columns:1fr}}
+.pay .core{padding:22px;display:grid;gap:10px;align-content:start}
+.pay.hl{background:linear-gradient(180deg,rgba(79,209,165,.5),rgba(79,209,165,.08))}
+.pay.hl .core{background:linear-gradient(160deg,#173229,#1b111c 70%)}
+.pay.hl .ibox{color:var(--pix);border-color:rgba(79,209,165,.4);background:rgba(79,209,165,.12)}
+.pay .big{font-family:var(--f-display);color:var(--ink);font-size:1.35rem}
+.pay p{color:var(--muted);font-size:.95rem}
+.pay .pct{font-family:var(--f-display);font-size:3rem;line-height:1;color:var(--pix)}
+
+/* 10 closing */
+.terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:22px 30px}
+.term{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.term .ibox{width:44px;height:44px;border-radius:14px}
+.term h3{font-size:1.1rem;margin-bottom:4px}
+.term p{color:var(--muted);font-size:.95rem}
+.accept .core{padding:40px 24px;display:grid;gap:14px;justify-items:center;text-align:center;background:radial-gradient(80% 100% at 50% 0,#4a1c34,#1b111c 70%)}
+.accept .script{font-family:var(--f-script);font-size:clamp(2.6rem,6vw,3.6rem);color:var(--gold-2);line-height:1}
+.pill-cta{text-decoration:none;transition:transform .5s var(--ease)}
+.pill-cta:hover i{transform:translate(2px,-2px) scale(1.05)}
+.pill-cta:active{transform:scale(.98)}
+.pill-cta i{transition:transform .5s var(--ease)}
+.pill-cta{display:inline-flex;align-items:center;gap:12px;border-radius:999px;background:var(--gold-2);color:var(--night);font-weight:500;padding:8px 8px 8px 22px}
+.pill-cta i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(15,10,16,.12)}
+.pill-cta .ico{width:16px;height:16px;stroke-width:1.8}
+
+/* media */
+.bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.shade{position:absolute;inset:0;z-index:0;pointer-events:none}
+#abertura .shade{background:radial-gradient(70% 60% at 50% 45%,rgba(15,10,16,.55),rgba(15,10,16,.92) 75%),linear-gradient(180deg,rgba(15,10,16,.6),rgba(15,10,16,.2) 40%,var(--night))}
+#abertura .sparkles{z-index:0}
+#pacotes .bgv{opacity:.22;mix-blend-mode:screen}
+#pacotes .shade{background:linear-gradient(180deg,var(--night),rgba(15,10,16,.4) 40%,var(--night))}
+.bento{display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:1fr 1fr;gap:14px;min-height:340px}
+.bento .bezel:first-child{grid-row:span 2}
+@media (max-width:760px){.bento{grid-template-columns:1fr 1fr;grid-template-rows:auto;min-height:0}.bento .bezel:first-child{grid-column:span 2;grid-row:auto;aspect-ratio:4/3}.bento .bezel{aspect-ratio:1}}
+.tile .core{position:relative;overflow:hidden;padding:0}
+.tile video,.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.tile .cap{position:absolute;left:12px;bottom:12px;z-index:1;display:inline-flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink);background:rgba(15,10,16,.6);border:1px solid var(--hair);border-radius:999px;padding:5px 11px}
+.tile .cap .ico{color:var(--gold-2);width:15px;height:15px}
+.tile .core::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(15,10,16,.55));border-radius:inherit}
+.accept .core{position:relative;overflow:hidden}
+.accept .core>*:not(video):not(.shade){position:relative;z-index:1}
+.accept .shade{background:radial-gradient(80% 90% at 50% 40%,rgba(27,17,28,.5),rgba(27,17,28,.86))}
+.totop{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:center;gap:8px;padding:8px 16px 8px 8px;border-radius:999px;border:1px solid var(--hair);background:rgba(27,17,28,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--gold-2);font:inherit;font-size:.85rem;cursor:pointer;box-shadow:0 18px 40px -18px rgba(0,0,0,.7);opacity:0;transform:translateY(16px) scale(.96);pointer-events:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.totop.on{opacity:1;transform:none;pointer-events:auto}
+.totop .c{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--gold-2),var(--gold));color:var(--night);transition:transform .5s var(--ease)}
+.totop .c svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.totop:hover .c{transform:translateY(-2px) scale(1.05)}.totop:active{transform:scale(.97)}
+.a-hero .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.a-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,10,19,.1) 30%,rgba(19,10,19,.92))}
+.a-hero .t{z-index:1}
+.story .pic,.thumb,.masonry div{background-size:cover;background-position:center}
+img.kb{animation:kb 16s cubic-bezier(.45,.05,.55,.95) infinite alternate;transform-origin:50% 40%;will-change:transform;backface-visibility:hidden;transform:translateZ(0)}
+@keyframes kb{from{transform:translateZ(0) scale(1)}to{transform:translateZ(0) scale(1.1) translate3d(-1.5%,1%,0)}}
+.credit{font-size:.72rem;color:var(--muted);opacity:.8;text-align:center}
+.credit a{color:var(--muted)}
+
+/* phone hardening: no snapping on tall slides, everything stacks and shrinks */
+.wrap>*,.packs>*,.pack .core>*,.pricebox>*,.pkhead>*{min-width:0}
+.pval,.plink,.save{overflow-wrap:anywhere}
+@media (max-width:860px){
+  html{scroll-snap-type:none}
+  .slide{min-height:auto;overflow-x:clip;overflow-y:visible}
+  #abertura{min-height:100svh;overflow:clip}
+}
+@media (max-width:700px){
+  .pkhead{flex-direction:column;align-items:stretch}
+  .toggle{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .toggle button{justify-content:center;padding:9px 8px;font-size:.86rem}
+  .pack .core{padding:18px}
+  .pricebox{padding:14px}
+  .pval{font-size:1.9rem}
+  .bezel{border-radius:24px;padding:5px}
+  .core{border-radius:19px}
+  table{min-width:0}
+  thead{display:none}
+  tbody,tr,td{display:block;width:100%}
+  tr{padding:14px 16px;border-bottom:1px solid var(--hair)}
+  tr:last-child{border-bottom:0}
+  td{border:0;padding:4px 0;display:flex;justify-content:space-between;gap:12px;text-align:right}
+  td.num{text-align:right}
+  td:first-child{padding-bottom:8px}
+  td.px,td.lk{background:none}
+  td[data-l]::before{content:attr(data-l);color:var(--muted);font-size:.85rem;text-align:left}
+  td.px[data-l]::before{color:var(--pix)}
+}
+@media (prefers-reduced-motion:reduce){
+  /* keep the ambient loops (videos, photo drift, app feed); only make the entrance reveals instant */
+  .slide.play .rise{animation-duration:.01s!important;animation-delay:0s!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- icon sprite: thin-line set -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="8.5" width="17" height="4" rx="1"/><path d="M5 12.5V20h14v-7.5M12 8.5V20M12 8.5C10 4 6.5 4.5 7 7c.3 1.3 2.5 1.5 5 1.5zm0 0c2-4.5 5.5-4 5-1.5-.3 1.3-2.5 1.5-5 1.5z"/></symbol>
+  <symbol id="i-pix" viewBox="0 0 24 24"><path d="M12 3l3.6 3.6M12 3L8.4 6.6M12 21l3.6-3.6M12 21l-3.6-3.6M3 12l3.6-3.6M3 12l3.6 3.6M21 12l-3.6-3.6M21 12l-3.6 3.6"/><path d="M8.4 6.6L12 10.2l3.6-3.6M8.4 17.4L12 13.8l3.6 3.6M6.6 8.4L10.2 12l-3.6 3.6M17.4 8.4L13.8 12l3.6 3.6"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8 14h2M14 14h2M8 17h2"/></symbol>
+  <symbol id="i-mask" viewBox="0 0 24 24"><path d="M2.5 9c1.5-2.5 5-3 7.5-1.2.9.6 1.4.9 2 .9s1.1-.3 2-.9C16.5 6 20 6.5 21.5 9c.5 3.5-1.6 7-5 7-1.8 0-3-1.2-4.5-2-1.5.8-2.7 2-4.5 2-3.4 0-5.5-3.5-5-7z"/><path d="M6 11.2c1-1 2.6-1 3.4.2-1 .9-2.5 1-3.4-.2zM14.6 11.4c.8-1.2 2.4-1.2 3.4-.2-.9 1.2-2.4 1.1-3.4.2z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6.5-6 6.5-11a6.5 6.5 0 10-13 0c0 5 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.2l2.5 2.5 5-5.2"/></symbol>
+  <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.6-2.5h6.8L17 8h3a1 1 0 011 1v9.5a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13.3" r="3.7"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="9.5" r="1.6"/><path d="M4 17l4.5-4.5 3.5 3.5 2.5-2.5L20 19"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15.5V4M7.5 8.5L12 4l4.5 4.5M4.5 15v3.5a2 2 0 002 2h11a2 2 0 002-2V15"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="12.5" rx="1.8"/><path d="M8.5 21h7M12 17.5V21"/><path d="M10 9.2l4 2.1-4 2.1z"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2.5v2.5H14zM18 18h2v2M14 19.5h1.5M19.5 14v2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5c.6-3.3 3-5 6-5s5.4 1.7 6 5"/><path d="M15.5 5.6a3 3 0 010 5.8M17.5 14.8c1.8.7 3 2.3 3.4 4.7"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19.5S4 14.8 4 9.3A4 4 0 0112 7.6a4 4 0 018 1.7c0 5.5-8 10.2-8 10.2z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4.5 5.5h15a1 1 0 011 1v9.5a1 1 0 01-1 1H10l-4.5 3.5V17h-1a1 1 0 01-1-1V6.5a1 1 0 011-1z"/><path d="M8 10h8M8 13h5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11.5M7.5 11L12 15.5 16.5 11M4.5 15v3.5a2 2 0 002 2h11a2 2 0 002-2V15"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.8" cy="18" r="2.2"/><circle cx="16.8" cy="16" r="2.2"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.4 2.6 6.4 7 7-4.4.6-6.4 2.6-7 7-.6-4.4-2.6-6.4-7-7 4.4-.6 6.4-2.6 7-7zM19 16c.2 1.6.9 2.3 2.5 2.5-1.6.2-2.3.9-2.5 2.5-.2-1.6-.9-2.3-2.5-2.5 1.6-.2 2.3-.9 2.5-2.5z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 018 0v2.5M12 14.5v2"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><path d="M2.5 9.5h19M6 15h4"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 01-1 1h-4.5v-5.5h-5V20H5a1 1 0 01-1-1z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.3 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.3-3.5-8.5s1.1-6.1 3.5-8.5z"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 17H5a1.5 1.5 0 01-1.5-1.5v-5A1.5 1.5 0 015 9h14a1.5 1.5 0 011.5 1.5v5A1.5 1.5 0 0119 17h-2"/><rect x="7" y="14" width="10" height="6" rx="1"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10.5l5-3v9l-5-3"/></symbol>
+  <symbol id="i-hour" viewBox="0 0 24 24"><path d="M7 3.5h10M7 20.5h10M8 3.5c0 4.5 8 4.5 8 8.5s-8 4-8 8.5M16 3.5c0 4.5-8 4.5-8 8.5s8 4 8 8.5"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14.5 5.5l4 4L8 20H4v-4zM12.5 7.5l4 4"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 9h17M10 9v11"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.5 7.5L4 12l4.5 4.5M15.5 7.5L20 12l-4.5 4.5M13.5 5l-3 14"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5l7 2.5v5.5c0 4.6-3 7.8-7 9-4-1.2-7-4.4-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3.5 9.5a12 12 0 0117 0M6.5 12.8a7.5 7.5 0 0111 0M9.5 16a3 3 0 015 0"/><circle cx="12" cy="18.8" r=".6"/></symbol>
+  <symbol id="i-signal" viewBox="0 0 24 24"><path d="M5 18v-2M9.5 18v-5M14 18v-8M18.5 18V7"/></symbol>
+  <symbol id="i-bat" viewBox="0 0 24 24"><rect x="2.5" y="7.5" width="17" height="9" rx="2.2"/><rect x="4.5" y="9.5" width="11" height="5" rx="1" fill="currentColor" stroke="none"/><path d="M21.5 10.5v3"/></symbol>
+  <symbol id="i-flash" viewBox="0 0 24 24"><path d="M13 3L5.5 13.5H11L10 21l8-11h-5.5z"/></symbol>
+  <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0113.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 01-13.7 5.6L4 15.5M4 20v-4.5h4.5"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16.5V12l1.8-4.5h10.4L19 12v4.5M5 16.5h14M5 16.5V19h2.5v-2.5M19 16.5V19h-2.5v-2.5M5 12h14"/><circle cx="8" cy="14.3" r=".8"/><circle cx="16" cy="14.3" r=".8"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0014.5 4h-9A1.5 1.5 0 004 5.5v9A1.5 1.5 0 005.5 16H8"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8l5 3.2-5 3.2z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4.1-4 5.7-.8z"/></symbol>
+  <symbol id="i-tap" viewBox="0 0 24 24"><path d="M9.5 11V5.5a1.8 1.8 0 013.5 0V11l3.6.8a2.2 2.2 0 011.7 2.5l-.8 4.7H10.6L7 13.8a1.6 1.6 0 012.5-2z"/><path d="M6 6.5a5 5 0 0110.5-1"/></symbol>
+  <symbol id="i-chair" viewBox="0 0 24 24"><path d="M7 3.5h10M8 3.5v9M16 3.5v9M6.5 12.5h11M8 12.5V20M16 12.5V20"/></symbol>
+</svg>
+
+<nav class="dots" aria-label="Slides"></nav>
+<div class="counter" aria-hidden="true"><span id="cur">01</span> / <span id="tot">10</span></div>
+
+<main id="deck">
+
+<!-- 1 · abertura -->
+<section class="slide" id="abertura" aria-label="Abertura">
+  <img class="bgv kb" src="media/mascaras-hero.jpg" alt="" aria-hidden="true" fetchpriority="high">
+  <div class="shade" aria-hidden="true"></div>
+  <canvas class="sparkles" aria-hidden="true"></canvas>
+  <div class="wrap hero">
+    <svg class="mask-svg float rise" viewBox="0 0 360 190" aria-hidden="true">
+      <defs>
+        <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a2a4b"/><stop offset=".5" stop-color="#2b1628"/><stop offset="1" stop-color="#8a2a4b"/></linearGradient>
+        <linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#f2dda4" stop-opacity="0"/><stop offset=".5" stop-color="#f2dda4" stop-opacity=".9"/><stop offset="1" stop-color="#f2dda4" stop-opacity="0"/></linearGradient>
+        <clipPath id="mclip"><path d="M30 80 C50 40 120 38 160 72 Q180 84 200 72 C240 38 310 40 330 80 C336 110 310 150 260 150 C225 150 205 128 180 118 C155 128 135 150 100 150 C50 150 24 110 30 80 Z"/></clipPath>
+      </defs>
+      <path d="M180 72 C176 40 186 14 200 2 M180 72 C186 44 172 20 160 8" fill="none" stroke="#d6b26c" stroke-width="1.2" opacity=".7"/>
+      <path d="M30 80 C50 40 120 38 160 72 Q180 84 200 72 C240 38 310 40 330 80 C336 110 310 150 260 150 C225 150 205 128 180 118 C155 128 135 150 100 150 C50 150 24 110 30 80 Z" fill="url(#mg)"/>
+      <g clip-path="url(#mclip)"><rect x="-120" y="0" width="90" height="190" fill="url(#sh)" transform="skewX(-20)"><animate attributeName="x" values="-120;460" dur="4.5s" repeatCount="indefinite"/></rect></g>
+      <path class="stroke" d="M30 80 C50 40 120 38 160 72 Q180 84 200 72 C240 38 310 40 330 80 C336 110 310 150 260 150 C225 150 205 128 180 118 C155 128 135 150 100 150 C50 150 24 110 30 80 Z"/>
+      <path class="stroke" d="M72 96 C90 76 130 76 146 98 C128 114 92 116 72 96 Z"/>
+      <path class="stroke" d="M214 98 C230 76 270 76 288 96 C268 116 232 114 214 98 Z"/>
+      <path class="stroke" d="M330 80 C346 72 352 56 344 44 M30 80 C14 72 8 56 16 44"/>
+      <g fill="#f2dda4"><circle cx="180" cy="100" r="2.4"/><circle cx="110" cy="132" r="1.6"/><circle cx="250" cy="132" r="1.6"/><circle cx="60" cy="70" r="1.3"/><circle cx="300" cy="70" r="1.3"/></g>
+    </svg>
+    <p class="kicker rise d1">Proposta comercial · Convite interativo</p>
+    <h1 class="rise d2">Baile de <em>Máscaras</em></h1>
+    <p class="script rise d3">quinze anos</p>
+    <div class="chips rise d4">
+      <span class="chip"><svg class="ico"><use href="#i-heart"/></svg>Para <b>Dideia Torres</b></span>
+      <span class="chip"><svg class="ico"><use href="#i-edit"/></svg>Por <b>Vinícius Schneider &amp; Gabriel Vieira</b></span>
+      <span class="chip"><svg class="ico"><use href="#i-hour"/></svg>Válida até <b>22/10/2026</b></span>
+    </div>
+    <button class="scroll-cue rise d5" type="button" id="cue" aria-label="Ir para o próximo slide">
+      <span class="mouse" aria-hidden="true"></span>
+      <span class="chev" aria-hidden="true"><svg class="ico"><use href="#i-down"/></svg><svg class="ico"><use href="#i-down"/></svg></span>
+      <span class="lbl">Role para entrar no baile</span>
+    </button>
+  </div>
+</section>
+
+<!-- 2 · quem somos -->
+<section class="slide" id="quem-somos" aria-label="Quem somos">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-spark"/></svg>Quem somos</span>
+      <h2 class="rise d1">Um convite que começa a festa <em>antes do primeiro brinde</em></h2>
+      <p class="lead rise d2">Criamos convites interativos: uma página feita para o celular, com o encanto do convite impresso e a parte prática da festa resolvida. O convidado abre o link no WhatsApp e entra no clima do baile. Ali ele confirma presença, escolhe o presente e encontra o salão sem precisar perguntar nada à família.</p>
+    </div>
+    <div class="bento rise d2">
+      <div class="bezel tile"><div class="core"><img class="kb" src="media/mascaras-retrato.jpg" alt=""><span class="cap"><svg class="ico"><use href="#i-mask"/></svg>As máscaras</span></div></div>
+      <div class="bezel tile"><div class="core"><video poster="media/valsa.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+<source src="media/valsa.mp4" type="video/mp4"><source src="media/valsa.webm" type="video/webm"></video><span class="cap"><svg class="ico"><use href="#i-spark"/></svg>A valsa</span></div></div>
+      <div class="bezel tile"><div class="core"><img class="kb" src="media/mascara-ouro.jpg" alt=""><span class="cap"><svg class="ico"><use href="#i-heart"/></svg>O mistério</span></div></div>
+    </div>
+    <div class="trio">
+      <div class="bezel feat rise d2"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-mask"/></svg></span><h3>Encanto</h3><p>Abertura animada, música e a história da debutante contada em imagens.</p></div></div>
+      <div class="bezel feat rise d3"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-layout"/></svg></span><h3>Organização</h3><p>Confirmações, presentes e recados reunidos num painel só, prontos para planilha.</p></div></div>
+      <div class="bezel feat rise d4"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-image"/></svg></span><h3>Memória</h3><p>As fotos dos convidados viram mural ao vivo no telão e, depois, o álbum da família.</p></div></div>
+    </div>
+    <div class="sign rise d5"><span class="script">Vinícius &amp; Gabriel</span><span class="muted">Vinícius Schneider · Gabriel Vieira</span></div>
+  </div>
+</section>
+
+<!-- 3 · pedido -->
+<section class="slide" id="pedido" aria-label="O que entendemos">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-msg"/></svg>O que entendemos</span>
+      <h2 class="rise d1">Seis botões, <em>um baile inteiro</em></h2>
+      <p class="quote rise d2">“Baile de máscara, festa de 15 anos. Convite interativo. Botões: lista de presentes, PIX, detalhes da festa, dress code, localização, confirmação de presença.”</p>
+    </div>
+    <div class="req-grid">
+      <div class="bezel req rise d2"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-gift"/></svg></span><span class="n">01</span><h3>Lista de presentes</h3></div></div>
+      <div class="bezel req rise d2"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-pix"/></svg></span><span class="n">02</span><h3>PIX</h3></div></div>
+      <div class="bezel req rise d3"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-cal"/></svg></span><span class="n">03</span><h3>Detalhes da festa</h3></div></div>
+      <div class="bezel req rise d3"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-mask"/></svg></span><span class="n">04</span><h3>Dress code</h3></div></div>
+      <div class="bezel req rise d4"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-pin"/></svg></span><span class="n">05</span><h3>Localização</h3></div></div>
+      <div class="bezel req rise d4"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-check"/></svg></span><span class="n">06</span><h3>Confirmação de presença</h3></div></div>
+    </div>
+    <p class="plus rise d5"><svg class="ico" style="color:var(--gold)"><use href="#i-spark"/></svg>Somamos a história da aniversariante, o presente digital e duas ideias que fazem sucesso em festas: o álbum colaborativo por QR code e a câmera descartável digital, revelada só depois do baile.</p>
+  </div>
+</section>
+
+<!-- 4 · app -->
+<section class="slide" id="experiencia" aria-label="A experiência no celular">
+  <div class="wrap split">
+    <div style="display:grid;gap:22px;min-width:0">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-phone"/></svg>A experiência no celular</span>
+      <h2 class="rise d1">Antes, durante e depois, <em>no mesmo link</em></h2>
+      <div class="tabs rise d2" role="tablist" aria-label="Momentos da festa">
+        <button role="tab" id="tab-antes" aria-selected="true" aria-controls="m-antes"><svg class="ico"><use href="#i-msg"/></svg>Antes</button>
+        <button role="tab" id="tab-durante" aria-selected="false" aria-controls="m-durante"><svg class="ico"><use href="#i-camera"/></svg>Durante</button>
+        <button role="tab" id="tab-depois" aria-selected="false" aria-controls="m-depois"><svg class="ico"><use href="#i-image"/></svg>Depois</button>
+      </div>
+      <div class="moment rise d3" id="m-antes" role="tabpanel" aria-labelledby="tab-antes">
+        <h3>O convite</h3>
+        <ul>
+          <li><svg class="ico"><use href="#i-music"/></svg>Abertura animada com música e o nome de cada convidado</li>
+          <li><svg class="ico"><use href="#i-clock"/></svg>Contagem regressiva, detalhes da festa e dress code</li>
+          <li><svg class="ico"><use href="#i-pin"/></svg>Mapa com Google Maps, Waze e Uber</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Confirmação de presença com acompanhantes</li>
+          <li><svg class="ico"><use href="#i-gift"/></svg>Lista de presentes e PIX</li>
+        </ul>
+      </div>
+      <div class="moment" id="m-durante" role="tabpanel" aria-labelledby="tab-durante" hidden>
+        <h3>No salão</h3>
+        <ul>
+          <li><svg class="ico"><use href="#i-qr"/></svg>QR code em cada mesa abre o modo festa</li>
+          <li><svg class="ico"><use href="#i-camera"/></svg>Câmera do Baile com moldura de máscara e 24 poses</li>
+          <li><svg class="ico"><use href="#i-upload"/></svg>Envio de fotos da galeria do celular, sem cadastro</li>
+          <li><svg class="ico"><use href="#i-tv"/></svg>Cada foto aprovada entra no mural ao vivo do telão</li>
+        </ul>
+      </div>
+      <div class="moment" id="m-depois" role="tabpanel" aria-labelledby="tab-depois" hidden>
+        <h3>A lembrança</h3>
+        <ul>
+          <li><svg class="ico"><use href="#i-spark"/></svg>A galeria é revelada para todos no dia seguinte</li>
+          <li><svg class="ico"><use href="#i-download"/></svg>A família baixa o álbum completo</li>
+          <li><svg class="ico"><use href="#i-heart"/></svg>Recados e página de agradecimento</li>
+        </ul>
+      </div>
+      <p class="hint rise d4"><svg class="ico"><use href="#i-tap"/></svg>Simulação ilustrativa. Toque no celular para pausar a rolagem.</p>
+    </div>
+
+    <div class="stage rise d2" tabindex="0" aria-label="Simulação da tela do convite no celular">
+      <div class="phone"><div class="screen">
+        <div class="island"></div>
+        <div class="sbar"><span>21:30</span><span class="r"><svg class="ico"><use href="#i-signal"/></svg><svg class="ico"><use href="#i-wifi"/></svg><svg class="ico" style="width:22px"><use href="#i-bat"/></svg></span></div>
+        <div class="viewport">
+          <!-- ANTES -->
+          <div class="feed" data-m="antes">
+            <div class="a-hero">
+              <img class="photo" src="media/app-hero.jpg" alt="">
+              <svg class="bg" viewBox="0 0 200 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="display:none">
+                <defs><radialGradient id="lamp" cx=".5" cy=".2" r=".6"><stop offset="0" stop-color="#f2dda4" stop-opacity=".5"/><stop offset="1" stop-color="#f2dda4" stop-opacity="0"/></radialGradient></defs>
+                <rect width="200" height="215" fill="url(#lamp)"/>
+                <path d="M0 0h40c-6 40-2 90 10 140H0z" fill="#5a1630" opacity=".8"/><path d="M200 0h-40c6 40 2 90-10 140h50z" fill="#5a1630" opacity=".8"/>
+                <path d="M54 92c10-14 30-15 40-4 3 2 9 2 12 0 10-11 30-10 40 4 2 18-8 34-26 34-9 0-15-6-20-10-5 4-11 10-20 10-18 0-28-16-26-34z" fill="#1a0c18" stroke="#f2dda4" stroke-width="1.2"/>
+                <path d="M68 100c6-6 15-6 19 1-6 5-14 5-19-1zM113 101c4-7 13-7 19-1-5 6-13 6-19 1z" fill="#6b2040"/>
+                <g fill="#f2dda4"><circle cx="100" cy="30" r="1.2"/><circle cx="80" cy="44" r=".9"/><circle cx="125" cy="40" r="1"/><circle cx="60" cy="24" r=".8"/><circle cx="145" cy="22" r=".9"/></g>
+              </svg>
+              <div class="t"><small>BAILE DE MÁSCARAS</small><span class="nm">Meus 15 anos</span><span class="dt">Sábado · 21h · Salão Imperial</span></div>
+            </div>
+            <div class="cd"><div><b>24</b><span>dias</span></div><div><b>07</b><span>horas</span></div><div><b>31</b><span>min</span></div><div><b>12</b><span>seg</span></div></div>
+            <div class="qa">
+              <div><i><svg class="ico"><use href="#i-cal"/></svg></i>Detalhes</div>
+              <div><i><svg class="ico"><use href="#i-mask"/></svg></i>Dress code</div>
+              <div><i><svg class="ico"><use href="#i-pin"/></svg></i>Local</div>
+              <div><i><svg class="ico"><use href="#i-check"/></svg></i>Confirmar</div>
+              <div><i><svg class="ico"><use href="#i-gift"/></svg></i>Presentes</div>
+              <div><i><svg class="ico"><use href="#i-pix"/></svg></i>PIX</div>
+            </div>
+            <div class="sec"><h4>Nossa história <a>ver tudo</a></h4>
+              <div class="story">
+                <div><span class="pic" style="--g:linear-gradient(160deg,#c98d6a,#6b2040)"></span><b>2011</b>O primeiro sorriso</div>
+                <div><span class="pic" style="--g:url(media/g8.jpg) center/cover"></span><b>2018</b>A primeira dança</div>
+                <div><span class="pic" style="--g:url(media/g6.jpg) center/cover"></span><b>2026</b>Quinze anos</div>
+              </div>
+            </div>
+            <div class="sec"><h4>Dress code</h4><span>Traje passeio completo. Máscaras em dourado, preto ou vinho.</span>
+              <div class="row"><span class="btn" style="background:#d6b26c;border:0;flex:0 0 26px;height:26px"></span><span class="btn" style="background:#0f0a10;flex:0 0 26px;height:26px"></span><span class="btn" style="background:#7d2442;border:0;flex:0 0 26px;height:26px"></span></div>
+            </div>
+            <div class="sec"><h4>Como chegar</h4>
+              <div class="map"><svg viewBox="0 0 240 86" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60L240 40M60 0l30 86M150 0l-20 86M0 20l240 30" stroke="#47344a" stroke-width="6" fill="none"/><path d="M0 60L240 40M60 0l30 86" stroke="#5b465d" stroke-width="2" fill="none"/><circle cx="124" cy="46" r="14" fill="#d6b26c" opacity=".25"/><path d="M124 30c-6 0-10 4-10 9 0 7 10 15 10 15s10-8 10-15c0-5-4-9-10-9z" fill="#d6b26c"/><circle cx="124" cy="39" r="3" fill="#1a0c18"/></svg></div>
+              <div class="row"><span class="btn"><svg class="ico"><use href="#i-pin"/></svg>Maps</span><span class="btn">Waze</span><span class="btn"><svg class="ico"><use href="#i-car"/></svg>Uber</span></div>
+            </div>
+            <div class="sec"><h4>Confirme sua presença</h4>
+              <div class="inp"><svg class="ico"><use href="#i-users"/></svg>Família Silva</div>
+              <div class="step"><span>Acompanhantes</span><span class="ctl"><span>−</span><b>2</b><span>+</span></span></div>
+              <div class="inp">Restrição alimentar (opcional)</div>
+              <span class="btn solid"><svg class="ico"><use href="#i-check"/></svg>Confirmar presença</span>
+            </div>
+            <div class="sec"><h4>Lista de presentes <a>12 itens</a></h4>
+              <div class="gifts">
+                <div class="gift"><span class="pic" style="--g:linear-gradient(160deg,#d6b26c,#8a5a2a)"><svg class="ico"><use href="#i-mask"/></svg></span><div>Máscara veneziana<b>R$ 120</b></div></div>
+                <div class="gift"><span class="pic" style="--g:linear-gradient(160deg,#7d2442,#2b1628)"><svg class="ico"><use href="#i-star"/></svg></span><div>Cota viagem<b>R$ 200</b></div></div>
+              </div>
+            </div>
+            <div class="sec"><h4>Presente via PIX</h4>
+              <div class="pixcard"><span class="qr"><svg viewBox="0 0 21 21" aria-hidden="true"><path fill="#1a0c18" d="M0 0h7v7H0zM2 2v3h3V2zM14 0h7v7h-7zm2 2v3h3V2zM0 14h7v7H0zm2 2v3h3v-3zM9 0h2v2H9zm0 4h3v2H9zm-1 4h2v3H8zm4 0h3v2h-3zm5 1h2v2h-2zm-9 4h3v2H8zm5 0h2v3h-2zm4 1h4v2h-4zm-8 4h2v4H9zm3 1h3v3h-3zm5 2h4v2h-4z"/></svg></span>
+                <div style="display:grid;gap:6px"><span>Chave PIX da família</span><span class="btn"><svg class="ico"><use href="#i-copy"/></svg>Copiar código</span></div></div>
+            </div>
+          </div>
+          <!-- DURANTE -->
+          <div class="feed" data-m="durante" hidden>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:.66rem;color:#eadccb"><span style="font-family:var(--f-display);font-size:.95rem;color:var(--ink)">Câmera do Baile</span><span class="live">AO VIVO</span></div>
+            <div class="cam">
+              <div class="top"><span><svg class="ico"><use href="#i-flash"/></svg>Auto</span><span>12 de 24 poses</span></div>
+              <svg viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <defs><radialGradient id="bok" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f2dda4" stop-opacity=".7"/><stop offset="1" stop-color="#f2dda4" stop-opacity="0"/></radialGradient></defs>
+                <g><circle cx="20" cy="30" r="14" fill="url(#bok)"/><circle cx="120" cy="22" r="18" fill="url(#bok)"/><circle cx="70" cy="16" r="10" fill="url(#bok)"/><circle cx="135" cy="70" r="12" fill="url(#bok)"/></g>
+                <ellipse cx="55" cy="96" rx="17" ry="20" fill="#c99a80"/><path d="M28 200c0-40 12-62 27-62s27 22 27 62z" fill="#7d2442"/><path d="M36 74c4-14 34-14 38 0" fill="#2a1418"/>
+                <path d="M40 92c4-6 11-6 14-1 1 1 2 1 3 0 3-5 10-5 14 1 0 7-5 11-10 11-3 0-5-2-6-3-1 1-3 3-6 3-5 0-9-4-9-11z" fill="#d6b26c"/>
+                <ellipse cx="102" cy="104" rx="16" ry="19" fill="#b88468"/><path d="M76 200c0-36 12-56 26-56s26 20 26 56z" fill="#1d1420"/><path d="M84 92c2-16 34-16 36 2-8-6-26-8-36-2z" fill="#3a2418"/>
+                <path d="M88 101c4-6 10-6 13-1 1 1 2 1 3 0 3-5 9-5 13 1 0 6-5 10-9 10-3 0-5-2-6-3-1 1-3 3-6 3-5 0-8-4-8-10z" fill="#1a0c18" stroke="#d6b26c" stroke-width=".6"/>
+                <rect x="6" y="6" width="138" height="188" rx="10" fill="none" stroke="#f2dda4" stroke-width="1.2" stroke-dasharray="2 3"/>
+                <text x="75" y="184" fill="#f2dda4" font-size="7" text-anchor="middle" font-family="Cinzel, serif" letter-spacing="1.5">BAILE DE MÁSCARAS · XV</text>
+              </svg>
+            </div>
+            <div class="film"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i><i class="u"></i></div>
+            <div class="camctl"><span class="thumb" style="--g:url(media/g4.jpg) center/cover"></span><span class="shutter"></span><span class="flip"><svg class="ico"><use href="#i-flip"/></svg></span></div>
+            <div class="sec"><h4>Mural ao vivo <span class="live">NO TELÃO</span></h4><span>Suas fotos entram no telão assim que a família aprovar.</span><span class="btn solid"><svg class="ico"><use href="#i-upload"/></svg>Enviar fotos da galeria</span></div>
+            <div class="sec"><h4>Revelação</h4><span>As fotos são reveladas para todos amanhã, às 12h.</span></div>
+          </div>
+          <!-- DEPOIS -->
+          <div class="feed" data-m="depois" hidden>
+            <div class="reveal"><small style="font-family:var(--f-label);font-size:.5rem;letter-spacing:.26em;color:var(--gold)">A GALERIA FOI REVELADA</small><span class="nm">Que noite!</span>
+              <div class="stats"><div><b>318</b><span style="font-size:.52rem;color:#9d8d93">fotos</span></div><div><b>96</b><span style="font-size:.52rem;color:#9d8d93">convidados</span></div><div><b>41</b><span style="font-size:.52rem;color:#9d8d93">recados</span></div></div></div>
+            <div class="masonry">
+              <div style="height:70px;--g:url(media/g1.jpg) center/cover"></div><div style="height:52px;--g:url(media/g4.jpg) center/cover"></div><div style="height:88px;--g:url(media/g5.jpg) center/cover"></div>
+              <div style="height:60px;--g:url(media/g9.jpg) center/cover"></div><div style="height:80px;--g:url(media/g2.jpg) center/cover"></div><div style="height:58px;--g:url(media/g10.jpg) center/cover"></div>
+              <div style="height:64px;--g:url(media/g3.jpg) center/cover"></div><div style="height:50px;--g:url(media/g7.jpg) center/cover"></div><div style="height:72px;--g:url(media/g6.jpg) center/cover"></div>
+            </div>
+            <span class="btn solid"><svg class="ico"><use href="#i-download"/></svg>Baixar álbum completo</span>
+            <div class="note"><b>Tia Lu</b>Que noite linda! Feliz 15 anos.</div>
+            <div class="note"><b>Pedro</b>A valsa foi de emocionar.</div>
+          </div>
+        </div>
+        <div class="tabbar"><span class="on"><svg class="ico"><use href="#i-home"/></svg>Início</span><span><svg class="ico"><use href="#i-camera"/></svg>Câmera</span><span><svg class="ico"><use href="#i-image"/></svg>Galeria</span><span><svg class="ico"><use href="#i-msg"/></svg>Recados</span></div>
+        <div class="home-ind"></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · salão -->
+<section class="slide" id="salao" aria-label="O salão interativo">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-tap"/></svg>Entre no salão</span>
+      <h2 class="rise d1">Toque nos pontos dourados e veja <em>cada canto da festa</em></h2>
+    </div>
+    <div class="hall-grid">
+      <div class="bezel hall-frame rise d2"><div class="core">
+        <svg class="hall" id="hall" viewBox="0 0 1000 620" role="img" aria-label="Ilustração do salão de festa com telão, lustres, mesas, pista de dança, mesa de presentes, recepção e mesa da família">
+          <defs>
+            <linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1626"/><stop offset="1" stop-color="#1a0e19"/></linearGradient>
+            <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1a22"/><stop offset="1" stop-color="#0d080c"/></linearGradient>
+            <linearGradient id="danceG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2a2c"/><stop offset="1" stop-color="#1c1216"/></linearGradient>
+            <linearGradient id="curtG" x1="0" x2="1"><stop offset="0" stop-color="#4a0f25"/><stop offset=".3" stop-color="#8a2246"/><stop offset=".55" stop-color="#5a1430"/><stop offset=".8" stop-color="#8a2246"/><stop offset="1" stop-color="#4a0f25"/></linearGradient>
+            <linearGradient id="stageG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2632"/><stop offset="1" stop-color="#1a1018"/></linearGradient>
+            <linearGradient id="clothG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7efe4"/><stop offset="1" stop-color="#b8a796"/></linearGradient>
+            <radialGradient id="topG" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#fffaf2"/><stop offset="1" stop-color="#d9cbbb"/></radialGradient>
+            <radialGradient id="glowG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe7b0" stop-opacity=".9"/><stop offset=".35" stop-color="#f2c97a" stop-opacity=".35"/><stop offset="1" stop-color="#f2c97a" stop-opacity="0"/></radialGradient>
+            <radialGradient id="candleG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd98a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
+            <radialGradient id="vig" cx=".5" cy=".45" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".65"/></radialGradient>
+            <linearGradient id="screenGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2c97a" stop-opacity=".22"/><stop offset="1" stop-color="#f2c97a" stop-opacity="0"/></linearGradient>
+            <linearGradient id="chairG" x1="0" x2="1"><stop offset="0" stop-color="#8a6a32"/><stop offset=".5" stop-color="#e6c784"/><stop offset="1" stop-color="#8a6a32"/></linearGradient>
+            <clipPath id="scrClip"><rect x="352" y="72" width="296" height="166" rx="3"/></clipPath>
+            <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
+            <filter id="soft2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
+          </defs>
+          <rect width="1000" height="620" fill="#0b070b"/>
+          <!-- back wall -->
+          <rect width="1000" height="300" fill="url(#wallG)"/>
+          <g id="wallDeco"></g>
+          <!-- floor -->
+          <path d="M0 300H1000V620H0Z" fill="url(#floorG)"/>
+          <g id="floorLines" stroke="#f2dda4" stroke-opacity=".05" fill="none"></g>
+          <!-- stage + screen -->
+          <path d="M300 268H700L730 300H270Z" fill="url(#stageG)"/>
+          <path d="M270 300H730V312H270Z" fill="#120a10"/>
+          <path d="M270 300H730" stroke="#d6b26c" stroke-opacity=".5"/>
+          <rect x="336" y="56" width="328" height="198" rx="4" fill="#1d1a20" stroke="#4a3e46" stroke-width="2"/>
+          <g stroke="#5a4c55" stroke-width="1.2" fill="none"><path d="M336 46H664M336 46l10 10M664 46l-10 10"/><path d="M350 46l12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10 12-10 12 10"/></g>
+          <path d="M350 254l-6 14M650 254l6 14" stroke="#4a3e46" stroke-width="3"/>
+          <rect x="352" y="72" width="296" height="166" fill="#120a10"/>
+          <g clip-path="url(#scrClip)"><g id="slides"></g>
+            <rect x="352" y="214" width="296" height="24" fill="rgba(0,0,0,.55)"/>
+            <text x="364" y="230" font-family="Cinzel, serif" font-size="10" letter-spacing="2" fill="#f2dda4">MURAL AO VIVO</text>
+            <circle cx="630" cy="226" r="4" fill="#4fd1a5"><animate attributeName="opacity" values="1;.2;1" dur="1.4s" repeatCount="indefinite"/></circle>
+          </g>
+          <rect x="300" y="60" width="400" height="300" fill="url(#screenGlow)" opacity=".8"/>
+          <!-- speakers -->
+          <g fill="#151015" stroke="#3a3036"><rect x="296" y="196" width="28" height="72" rx="3"/><rect x="676" y="196" width="28" height="72" rx="3"/></g>
+          <g fill="#2a2228"><circle cx="310" cy="216" r="7"/><circle cx="310" cy="246" r="9"/><circle cx="690" cy="216" r="7"/><circle cx="690" cy="246" r="9"/></g>
+          <!-- string lights + chandeliers -->
+          <g id="lights"></g>
+          <!-- dance floor -->
+          <path d="M330 320H670L760 450H240Z" fill="url(#danceG)"/>
+          <g id="danceTiles" stroke="#f2dda4" stroke-opacity=".08" fill="none"></g>
+          <path d="M360 330H640L700 440H300Z" fill="#f2c97a" opacity=".05" filter="url(#soft)"/>
+          <g id="dancers"></g>
+          <!-- side pieces drawn by script: tables, gifts, reception, family table -->
+          <g id="scene"></g>
+          <rect width="1000" height="620" fill="url(#vig)" pointer-events="none"/>
+          <g id="hots"></g>
+        </svg>
+        <span class="tip"><svg class="ico"><use href="#i-tap"/></svg>Toque nos pontos</span>
+      </div></div>
+      <div class="bezel info rise d3"><div class="core" id="info" aria-live="polite">
+        <span class="tag"><svg class="ico"><use href="#i-spark"/></svg>Comece pelo telão</span>
+        <h3>Sete pontos, sete partes do sistema</h3>
+        <p class="muted">Cada ponto dourado mostra uma parte do convite funcionando na festa: o telão, as mesas, a pista, a recepção, a mesa de presentes, a mesa da família e o convidado com o celular.</p>
+        <div class="prog"><div class="bar"><i id="pbar"></i></div><span id="found">0 de 7 descobertos</span></div>
+      </div></div>
+    </div>
+    <div class="legend rise d4" id="legend" aria-label="Pontos do salão"></div>
+  </div>
+</section>
+
+<!-- 6 · pacotes -->
+<section class="slide" id="pacotes" aria-label="Pacotes">
+  <video class="bgv" poster="media/brilho.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+<source src="media/brilho.mp4" type="video/mp4"><source src="media/brilho.webm" type="video/webm"></video>
+  <div class="shade" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="pkhead">
+      <div class="head">
+        <span class="eyebrow rise"><svg class="ico"><use href="#i-star"/></svg>Pacotes</span>
+        <h2 class="rise d1">Escolha o <em>tamanho do baile</em></h2>
+      </div>
+      <div class="toggle rise d2" role="group" aria-label="Tempo de hospedagem">
+        <button type="button" aria-pressed="true" data-h="mes"><svg class="ico"><use href="#i-cal"/></svg>30 dias no ar</button>
+        <button type="button" aria-pressed="false" data-h="ano"><svg class="ico"><use href="#i-globe"/></svg>12 meses no ar</button>
+      </div>
+    </div>
+    <p class="host-note rise d2"><svg class="ico"><use href="#i-shield"/></svg>Hospedagem, banco de dados e armazenamento das fotos já estão no preço. Com 30 dias, o convite fica no ar durante a festa e a revelação da galeria. Com 12 meses, a página e o álbum ficam disponíveis por um ano.</p>
+    <div class="packs">
+      <article class="bezel pack rise d2"><div class="core">
+        <div class="ptop"><h3>Essencial</h3><span class="ibox"><svg class="ico"><use href="#i-msg"/></svg></span></div>
+        <div class="pricebox"><span class="pixtag"><svg class="ico"><use href="#i-pix"/></svg>5% off no PIX</span><div class="pval" data-pix="essencial">R$ 1.140</div><div class="plink">ou <s data-link="essencial">R$ 1.200</s> no link de pagamento</div><div class="save" data-save="essencial">Economize R$ 60</div></div>
+        <ul>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Layout exclusivo no tema baile de máscaras</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Detalhes da festa com contagem regressiva</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Dress code com referências de máscaras</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Localização com Maps, Waze e Uber</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Confirmação de presença e painel da família</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Lista de presentes e PIX</li>
+        </ul>
+      </div></article>
+      <article class="bezel pack rise d3"><div class="core">
+        <div class="ptop"><h3>Encantar</h3><span class="ibox"><svg class="ico"><use href="#i-music"/></svg></span></div>
+        <div class="pricebox"><span class="pixtag"><svg class="ico"><use href="#i-pix"/></svg>5% off no PIX</span><div class="pval" data-pix="encantar">R$ 2.137,50</div><div class="plink">ou <s data-link="encantar">R$ 2.250</s> no link de pagamento</div><div class="save" data-save="encantar">Economize R$ 112,50</div></div>
+        <p class="inc"><svg class="ico"><use href="#i-spark"/></svg>Tudo do Essencial, mais:</p>
+        <ul>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Abertura animada com música</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>História da debutante em linha do tempo</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Link com o nome de cada convidado</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Mural de recados com moderação</li>
+        </ul>
+      </div></article>
+      <article class="bezel pack star rise d4"><div class="core">
+        <div class="ptop"><h3>Baile Completo</h3><span class="badge">Mais completo</span></div>
+        <div class="pricebox"><span class="pixtag"><svg class="ico"><use href="#i-pix"/></svg>5% off no PIX</span><div class="pval" data-pix="baile">R$ 3.705</div><div class="plink">ou <s data-link="baile">R$ 3.900</s> no link de pagamento</div><div class="save" data-save="baile">Economize R$ 195</div></div>
+        <p class="inc"><svg class="ico"><use href="#i-spark"/></svg>Tudo do Encantar, mais:</p>
+        <ul>
+          <li class="new"><svg class="ico"><use href="#i-tv"/></svg>Mural ao vivo no telão ou TV</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Câmera do Baile com moldura e 24 poses</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Envio de fotos pelos convidados, sem cadastro</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Revelação da galeria e download do álbum</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Arte dos displays de mesa com QR code</li>
+          <li><svg class="ico"><use href="#i-tick"/></svg>Página de agradecimento</li>
+        </ul>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · opcionais -->
+<section class="slide" id="opcionais" aria-label="Opcionais">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-spark"/></svg>Opcionais</span>
+      <h2 class="rise d1">Detalhes que a família <em>pode somar</em></h2>
+    </div>
+    <div class="extras">
+      <div class="bezel extra rise d2"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-globe"/></svg></span><h3>Endereço próprio</h3><div class="val">+ R$ 40 por ano</div><p>Um domínio como nomedela15.com.br no lugar do endereço padrão. Configuração inclusa.</p></div></div>
+      <div class="bezel extra rise d3"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-print"/></svg></span><h3>Displays impressos</h3><div class="val">Conforme a gráfica</div><p>Entregamos a arte das plaquinhas de mesa com QR code; a impressão fica com a gráfica de sua escolha.</p></div></div>
+      <div class="bezel extra rise d4"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-video"/></svg></span><h3>Vídeos na galeria</h3><div class="val">Sob consulta</div><p>Convidados enviam vídeos curtos além das fotos. Pede mais espaço de armazenamento.</p></div></div>
+      <div class="bezel extra rise d5"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-hour"/></svg></span><h3>Mais tempo no ar</h3><div class="val">Sob consulta</div><p>Extensão do plano de 30 dias para quem decidir guardar o álbum por mais tempo.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · cronograma -->
+<section class="slide" id="cronograma" aria-label="Cronograma">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-cal"/></svg>Cronograma</span>
+      <h2 class="rise d1">Convite pronto em <em>30 de outubro</em></h2>
+    </div>
+    <div class="timeline rise d2">
+      <div class="tstep"><span class="node"><svg class="ico"><use href="#i-check"/></svg></span><span class="d">21/10</span><h3>Aprovação</h3><p>Aceite da proposta e envio de textos, fotos, chave PIX e lista de presentes.</p></div>
+      <div class="tstep"><span class="node"><svg class="ico"><use href="#i-layout"/></svg></span><span class="d">22–23/10</span><h3>Layout</h3><p>Apresentamos o visual do convite. Primeira rodada de ajustes.</p></div>
+      <div class="tstep"><span class="node"><svg class="ico"><use href="#i-code"/></svg></span><span class="d">23–28/10</span><h3>Desenvolvimento</h3><p>Construção das páginas, do painel e das funções do pacote escolhido.</p></div>
+      <div class="tstep"><span class="node"><svg class="ico"><use href="#i-phone"/></svg></span><span class="d">29/10</span><h3>Testes</h3><p>Testes em iPhone e Android. Segunda rodada de ajustes.</p></div>
+      <div class="tstep last"><span class="node"><svg class="ico"><use href="#i-spark"/></svg></span><span class="d">30/10</span><h3>Entrega</h3><p>Convite no ar, pronto para enviar aos convidados pelo WhatsApp.</p></div>
+    </div>
+    <div class="bezel callout rise d3"><div class="core"><svg class="ico"><use href="#i-camera"/></svg><p>No Baile Completo, o convite é entregue em 30/10. A câmera, o envio de fotos e o mural ao vivo só são usados no dia da festa, então são liberados e testados com a família até 7 dias antes do evento.</p></div></div>
+  </div>
+</section>
+
+<!-- 9 · investimento -->
+<section class="slide" id="investimento" aria-label="Investimento">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-card"/></svg>Investimento</span>
+      <h2 class="rise d1">No PIX, <em>o baile sai por menos</em></h2>
+    </div>
+    <div class="bezel inv rise d2"><div class="core">
+      <table>
+        <thead><tr><th>Pacote</th><th class="num px">30 dias · PIX</th><th class="num">30 dias · link</th><th class="num px">12 meses · PIX</th><th class="num">12 meses · link</th></tr></thead>
+        <tbody id="inv"></tbody>
+      </table>
+    </div></div>
+    <div class="paygrid">
+      <div class="bezel pay hl rise d3"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-pix"/></svg></span><span class="pct">5% off</span><span class="big">Pagamento no PIX</span><p>Desconto sobre o valor total. É a forma mais vantajosa para a família.</p></div></div>
+      <div class="bezel pay rise d4"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-link"/></svg></span><span class="big">Link de pagamento</span><p>Cartão de crédito, com opção de parcelamento, ou débito. Enviamos o link pelo WhatsApp.</p></div></div>
+      <div class="bezel pay rise d5"><div class="core"><span class="ibox"><svg class="ico"><use href="#i-hour"/></svg></span><span class="big">Em duas etapas</span><p>50% na aprovação da proposta e 50% na entrega do convite.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · aceite -->
+<section class="slide" id="aceite" aria-label="Condições e aceite">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rise"><svg class="ico"><use href="#i-shield"/></svg>Condições</span>
+      <h2 class="rise d1">Combinados para a festa <em>sair perfeita</em></h2>
+    </div>
+    <div class="terms rise d2">
+      <div class="term"><span class="ibox"><svg class="ico"><use href="#i-edit"/></svg></span><div><h3>Revisões</h3><p>Duas rodadas de ajustes: uma no layout e outra antes da entrega.</p></div></div>
+      <div class="term"><span class="ibox"><svg class="ico"><use href="#i-image"/></svg></span><div><h3>Conteúdo</h3><p>A família envia textos, fotos da história, chave PIX, lista de presentes e dados do salão até 21/10.</p></div></div>
+      <div class="term"><span class="ibox"><svg class="ico"><use href="#i-lock"/></svg></span><div><h3>Privacidade</h3><p>Galeria e mural ficam em link reservado aos convidados. As fotos são apagadas ao fim do período contratado.</p></div></div>
+      <div class="term"><span class="ibox"><svg class="ico"><use href="#i-tv"/></svg></span><div><h3>No dia da festa</h3><p>O mural ao vivo precisa de um telão ou TV com navegador e de internet no salão.</p></div></div>
+      <div class="term"><span class="ibox"><svg class="ico"><use href="#i-hour"/></svg></span><div><h3>Validade</h3><p>Proposta válida até 22/10/2026, para manter a entrega em 30/10.</p></div></div>
+    </div>
+    <div class="bezel accept rise d3"><div class="core">
+      <video class="bgv" poster="media/brinde.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+<source src="media/brinde.mp4" type="video/mp4"><source src="media/brinde.webm" type="video/webm"></video>
+      <div class="shade" aria-hidden="true"></div>
+      <span class="eyebrow" style="justify-self:center"><svg class="ico"><use href="#i-heart"/></svg>Para aprovar</span>
+      <p class="script">Vamos ao baile?</p>
+      <p class="lead" style="text-align:center;color:var(--ink)">Responda no nosso WhatsApp com o pacote e o tempo de hospedagem escolhidos. Enviamos o pagamento e começamos no mesmo dia.</p>
+      <a class="pill-cta" id="wa" href="https://wa.me/5599981148876" target="_blank" rel="noopener">Responder no WhatsApp<i><svg class="ico"><use href="#i-arrow"/></svg></i></a>
+      <p class="muted" style="position:relative;z-index:1">Vinícius Schneider &amp; Gabriel Vieira · WhatsApp <span style="user-select:all;color:var(--ink)">+55 99 98114-8876</span></p>
+    </div></div>
+    <p class="credit">Fotos e vídeos ilustrativos de bancos gratuitos (<a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Pexels</a> e <a href="https://mixkit.co/license/" target="_blank" rel="noopener">Mixkit</a>).</p>
+  </div>
+</section>
+
+</main>
+
+<button class="totop" id="totop" type="button" aria-label="Voltar ao início da proposta"><span class="c"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>Voltar ao início</button>
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg";
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var RATE=30, HOURS={essencial:44,encantar:70,baile:125}, INFRA={mes:150,ano:900}, PIX=.05;
+  var NAMES={essencial:"Essencial",encantar:"Encantar",baile:"Baile Completo"}, ICONS={essencial:"i-msg",encantar:"i-music",baile:"i-mask"};
+  var brl=function(v){var c=Math.round(v*100)%100!==0;return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:c?2:0,maximumFractionDigits:2})};
+  /* negotiated: Essencial closes at R$ 1.200 with 30 days; 12 months adds the same infra difference */
+  var FIXED={essencial:{mes:1200,ano:1200+INFRA.ano-INFRA.mes}};
+  var price=function(k,h){return FIXED[k]?FIXED[k][h]:HOURS[k]*RATE+INFRA[h]};
+  var el=function(tag,attrs,parent){var n=document.createElementNS(NS,tag);for(var a in attrs)n.setAttribute(a,attrs[a]);if(parent)parent.appendChild(n);return n};
+
+  /* prices */
+  var tb=document.getElementById("inv");
+  Object.keys(HOURS).forEach(function(k){
+    var m=price(k,"mes"),a=price(k,"ano"),tr=document.createElement("tr");
+    tr.innerHTML="<td><span class='pn'><svg class='ico'><use href='#"+ICONS[k]+"'/></svg>"+NAMES[k]+"</span></td><td class='num px' data-l='30 dias · PIX'>"+brl(m*(1-PIX))+"</td><td class='num lk' data-l='30 dias · link'>"+brl(m)+"</td><td class='num px' data-l='12 meses · PIX'>"+brl(a*(1-PIX))+"</td><td class='num lk' data-l='12 meses · link'>"+brl(a)+"</td>";
+    tb.appendChild(tr);
+  });
+  var setWa=function(h){
+    var msg="Olá, Vinícius e Gabriel! Sou Dideia Torres. Vi a proposta do convite interativo Baile de Máscaras e quero continuar a conversa. "+
+      "Estou olhando a opção de "+(h==="ano"?"12 meses":"30 dias")+" no ar e gostaria de fechar o pacote: ____ (Essencial, Encantar ou Baile Completo). "+
+      "Pagamento: ____ (PIX com 5% de desconto ou link de pagamento). Podemos seguir?";
+    var a=document.getElementById("wa");if(a)a.href="https://wa.me/5599981148876?text="+encodeURIComponent(msg);
+  };
+  var setHost=function(h){
+    setWa(h);
+    document.querySelectorAll(".toggle button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.h===h))});
+    Object.keys(HOURS).forEach(function(k){var v=price(k,h);
+      document.querySelector("[data-pix='"+k+"']").textContent=brl(v*(1-PIX));
+      document.querySelector("[data-link='"+k+"']").textContent=brl(v);
+      document.querySelector("[data-save='"+k+"']").textContent="Economize "+brl(v*PIX);
+    });
+  };
+  document.querySelectorAll(".toggle button").forEach(function(b){b.addEventListener("click",function(){setHost(b.dataset.h)})});
+  setHost("mes");
+
+  /* phone tabs + feed travel */
+  var fitFeed=function(f){var vp=f.parentElement;var t=Math.max(0,f.scrollHeight-vp.clientHeight);f.style.setProperty("--travel",t+"px");f.style.setProperty("--dur",Math.max(10,t/40)+"s")};
+  var tabs=document.querySelectorAll("[role=tab]");
+  tabs.forEach(function(t){t.addEventListener("click",function(){
+    var m=t.id.replace("tab-","");
+    tabs.forEach(function(o){o.setAttribute("aria-selected",String(o===t))});
+    ["antes","durante","depois"].forEach(function(x){
+      document.getElementById("m-"+x).hidden=x!==m;
+      var f=document.querySelector(".feed[data-m='"+x+"']");f.hidden=x!==m;if(x===m)fitFeed(f);
+    });
+  })});
+  var fitAll=function(){document.querySelectorAll(".feed:not([hidden])").forEach(fitFeed)};
+  fitAll();window.addEventListener("resize",fitAll);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitAll);
+
+  /* ===== ballroom ===== */
+  var wall=document.getElementById("wallDeco");
+  // pilasters with capitals
+  [40,170,830,960].forEach(function(x){
+    el("rect",{x:x-14,y:20,width:28,height:280,fill:"#311c2e"},wall);
+    el("rect",{x:x-12,y:20,width:4,height:280,fill:"#3d2439"},wall);
+    el("rect",{x:x-18,y:14,width:36,height:12,fill:"#8a6a32"},wall);
+    el("rect",{x:x-18,y:290,width:36,height:10,fill:"#2a1626"},wall);
+  });
+  // arched windows with night sky + curtains
+  [[105,"L"],[895,"R"]].forEach(function(w){
+    var x=w[0];
+    el("path",{d:"M"+(x-40)+" 250V110a40 40 0 0180 0V250Z",fill:"#120f24"},wall);
+    for(var s=0;s<14;s++)el("circle",{cx:x-34+Math.random()*68,cy:80+Math.random()*160,r:Math.random()*1.1+.3,fill:"#f2dda4",opacity:.6},wall);
+    el("path",{d:"M"+(x-40)+" 250V110a40 40 0 0180 0V250M"+x+" 70V250M"+(x-40)+" 170H"+(x+40),fill:"none",stroke:"#8a6a32","stroke-width":2},wall);
+    el("path",{d:"M"+(x-52)+" 60H"+(x+52)+"V70C"+(x+20)+" 90 "+(x-20)+" 90 "+(x-52)+" 70Z",fill:"url(#curtG)"},wall);
+    el("path",{d:"M"+(x-52)+" 66C"+(x-46)+" 140 "+(x-62)+" 220 "+(x-50)+" 296H"+(x-30)+"C"+(x-40)+" 220 "+(x-34)+" 140 "+(x-26)+" 80Z",fill:"url(#curtG)"},wall);
+    el("path",{d:"M"+(x+52)+" 66C"+(x+46)+" 140 "+(x+62)+" 220 "+(x+50)+" 296H"+(x+30)+"C"+(x+40)+" 220 "+(x+34)+" 140 "+(x+26)+" 80Z",fill:"url(#curtG)"},wall);
+    el("path",{d:"M"+(x-38)+" 170q-6 6 0 12M"+(x+38)+" 170q6 6 0 12",stroke:"#d6b26c","stroke-width":2,fill:"none"},wall);
+  });
+  // wainscot + molding
+  el("rect",{x:0,y:296,width:1000,height:4,fill:"#8a6a32",opacity:.7},wall);
+  [[215,250],[750,785]].forEach(function(r){el("rect",{x:r[0],y:70,width:r[1]-r[0],height:200,fill:"none",stroke:"#d6b26c","stroke-opacity":.18},wall)});
+  // stage drapes
+  el("path",{d:"M232 30H768V44C700 70 620 60 560 46 500 66 420 66 360 46 320 60 270 66 232 44Z",fill:"url(#curtG)"},wall);
+  el("path",{d:"M232 40C226 120 246 220 236 296H272C262 220 256 120 262 50Z",fill:"url(#curtG)"},wall);
+  el("path",{d:"M768 40C774 120 754 220 764 296H728C738 220 744 120 738 50Z",fill:"url(#curtG)"},wall);
+  el("path",{d:"M232 30H768",stroke:"#d6b26c","stroke-width":3},wall);
+
+  // floor perspective lines
+  var fl=document.getElementById("floorLines");
+  for(var i=-12;i<=12;i++)el("path",{d:"M"+(500+i*36)+" 300L"+(500+i*140)+" 620"},fl);
+  [330,370,420,480,550].forEach(function(y){el("path",{d:"M0 "+y+"H1000"},fl)});
+  // dance tiles
+  var dt=document.getElementById("danceTiles");
+  for(var j=0;j<=8;j++){var t=j/8;el("path",{d:"M"+(330+340*t)+" 320L"+(240+520*t)+" 450"},dt)}
+  [345,375,410].forEach(function(y){var k=(y-320)/130;el("path",{d:"M"+(330-90*k)+" "+y+"H"+(670+90*k)},dt)});
+
+  // screen carousel (photos of guests, drawn)
+  var slidesG=document.getElementById("slides");
+  var PAL=[["#c98d6a","#6b2040"],["#d6b26c","#3a2236"],["#8a2a4b","#1a0c18"],["#5c3a3a","#211320"],["#f2dda4","#7d2442"]];
+  var defs=document.querySelector("#hall defs");
+  PAL.forEach(function(p,i){var g=el("linearGradient",{id:"pg"+i,x1:0,y1:0,x2:1,y2:1},defs);el("stop",{offset:0,"stop-color":p[0]},g);el("stop",{offset:1,"stop-color":p[1]},g)});
+  var strip=el("g",{},slidesG);
+  var TEL=["787961","valsa","9391354","festa","787968"];
+  var photo=function(x,i){
+    var g=el("g",{},strip);
+    var im=el("image",{x:x,y:72,width:146,height:142,preserveAspectRatio:"xMidYMid slice"},g);
+    im.setAttribute("href","media/tel-"+TEL[i%TEL.length]+".jpg");
+    el("rect",{x:x+4,y:76,width:138,height:134,fill:"none",stroke:"#f2dda4","stroke-opacity":.5},g);
+    return;
+    el("rect",{x:x,y:72,width:146,height:142,fill:"url(#pg"+(i%5)+")"},g);
+    el("circle",{cx:x+30,cy:96,r:16,fill:"url(#candleG)",opacity:.6},g);
+    el("circle",{cx:x+120,cy:90,r:12,fill:"url(#candleG)",opacity:.5},g);
+    // two masked faces
+    el("ellipse",{cx:x+52,cy:150,rx:17,ry:21,fill:"#c99a80"},g);el("path",{d:"M"+(x+25)+" 214c0-30 12-44 27-44s27 14 27 44z",fill:i%2?"#1d1420":"#7d2442"},g);
+    el("path",{d:"M"+(x+37)+" 146c4-6 11-6 14-1 1 1 2 1 3 0 3-5 10-5 14 1 0 7-5 11-10 11-3 0-5-2-6-3-1 1-3 3-6 3-5 0-9-4-9-11z",fill:"#d6b26c"},g);
+    el("ellipse",{cx:x+100,cy:156,rx:15,ry:19,fill:"#b88468"},g);el("path",{d:"M"+(x+76)+" 214c0-28 11-40 24-40s24 12 24 40z",fill:i%2?"#7d2442":"#241626"},g);
+    el("path",{d:"M"+(x+86)+" 152c4-5 10-5 12-1h2c3-4 9-4 12 1 0 6-4 9-9 9-2 0-4-1-5-2-1 1-3 2-5 2-4 0-7-3-7-9z",fill:"#1a0c18",stroke:"#d6b26c","stroke-width":".8"},g);
+    el("rect",{x:x+4,y:76,width:138,height:134,fill:"none",stroke:"#f2dda4","stroke-opacity":.5},g);
+  };
+  for(var s=0;s<8;s++)photo(352+s*150,s);
+  var off=0;
+  setInterval(function(){off=(off+1)%5;strip.style.transition="transform 1.2s cubic-bezier(.32,.72,0,1)";strip.setAttribute("transform","translate("+(-150*off)+" 0)")},2600);
+
+  // string lights (catenaries) + chandeliers
+  var L=document.getElementById("lights");
+  [[0,8,330,60],[330,60,670,60],[670,60,1000,8],[0,40,500,110],[500,110,1000,40]].forEach(function(c,ci){
+    var x1=c[0],y1=c[1],x2=c[2],y2=c[3],sag=ci>2?50:26,mx=(x1+x2)/2,my=(y1+y2)/2+sag;
+    el("path",{d:"M"+x1+" "+y1+"Q"+mx+" "+my+" "+x2+" "+y2,stroke:"#3a3036","stroke-width":1,fill:"none"},L);
+    for(var t=0.04;t<1;t+=0.06){var xt=(1-t)*(1-t)*x1+2*(1-t)*t*mx+t*t*x2,yt=(1-t)*(1-t)*y1+2*(1-t)*t*my+t*t*y2;
+      el("circle",{cx:xt,cy:yt+2,r:6,fill:"url(#candleG)",opacity:.55},L);el("circle",{cx:xt,cy:yt+2,r:1.4,fill:"#fff3d6"},L);}
+  });
+  var chandelier=function(cx,cy,s){
+    var g=el("g",{},L);
+    el("circle",{cx:cx,cy:cy+18*s,r:70*s,fill:"url(#glowG)",opacity:.75},g);
+    el("path",{d:"M"+cx+" 0V"+(cy-6*s),stroke:"#8a6a32","stroke-width":1.4},g);
+    for(var r=0;r<3;r++){var w=(40-r*11)*s,y=cy+r*12*s;
+      el("path",{d:"M"+(cx-w)+" "+y+"Q"+cx+" "+(y+16*s)+" "+(cx+w)+" "+y,stroke:"#d6b26c","stroke-width":1.3,fill:"none"},g);
+      for(var k=0;k<=6-r;k++){var xx=cx-w+k*(2*w/(6-r||1));el("path",{d:"M"+xx+" "+(y+2)+"v"+(8*s),stroke:"#f2dda4","stroke-width":.7,opacity:.8},g);el("circle",{cx:xx,cy:y+10*s,r:1.6*s,fill:"#fff3d6"},g);el("circle",{cx:xx,cy:y-3*s,r:4*s,fill:"url(#candleG)"},g)}}
+    el("path",{d:"M"+cx+" "+(cy+30*s)+"l-4 10 4 8 4-8z",fill:"#f2dda4",opacity:.9},g);
+  };
+  chandelier(170,40,1.1);chandelier(830,40,1.1);chandelier(500,14,.7);
+
+  // dancers (silhouettes with masks)
+  var D=document.getElementById("dancers");
+  var person=function(x,y,s,dress,maskC,hair){
+    var g=el("g",{},D);
+    el("ellipse",{cx:x,cy:y+2,rx:14*s,ry:4*s,fill:"#000",opacity:.35},g);
+    el("path",{d:"M"+(x-13*s)+" "+y+"C"+(x-10*s)+" "+(y-24*s)+" "+(x-6*s)+" "+(y-34*s)+" "+(x-5*s)+" "+(y-40*s)+"H"+(x+5*s)+"C"+(x+6*s)+" "+(y-34*s)+" "+(x+10*s)+" "+(y-24*s)+" "+(x+13*s)+" "+y+"Z",fill:dress},g);
+    el("path",{d:"M"+(x-6*s)+" "+(y-40*s)+"l-1 -10h14l-1 10z",fill:dress},g);
+    el("circle",{cx:x,cy:y-56*s,r:6*s,fill:"#c99a80"},g);
+    el("path",{d:"M"+(x-7*s)+" "+(y-58*s)+"a7 7 0 0114 0c-3-3-11-3-14 0z",fill:hair},g);
+    el("path",{d:"M"+(x-6*s)+" "+(y-57*s)+"q3-2 6 0q3-2 6 0q-1 3-3 3t-3-1.5q-1 1.5-3 1.5t-3-3z",fill:maskC},g);
+  };
+  person(430,400,1,"#7d2442","#d6b26c","#2a1418");person(452,402,1.05,"#1d1420","#f2dda4","#3a2418");
+  person(560,380,.9,"#d6b26c","#1a0c18","#2a1418");person(580,382,.95,"#241626","#d6b26c","#1a0c10");
+  person(360,372,.85,"#3a2236","#d6b26c","#3a2418");person(645,425,1,"#5a1430","#f2dda4","#2a1418");
+
+  // scene: tables in depth order
+  var SC=document.getElementById("scene");
+  var table=function(x,y,s){
+    var g=el("g",{},SC);
+    el("ellipse",{cx:x,cy:y+30*s,rx:62*s,ry:14*s,fill:"#000",opacity:.45,filter:"url(#soft2)"},g);
+    // back chairs
+    for(var a=0;a<10;a++){var ang=Math.PI+a/9*Math.PI;var cx=x+Math.cos(ang)*52*s,cy=y+Math.sin(ang)*16*s;
+      el("path",{d:"M"+(cx-5*s)+" "+(cy+2*s)+"V"+(cy-22*s)+"M"+(cx+5*s)+" "+(cy+2*s)+"V"+(cy-22*s)+"M"+(cx-5*s)+" "+(cy-22*s)+"H"+(cx+5*s)+"M"+(cx-5*s)+" "+(cy-15*s)+"H"+(cx+5*s)+"M"+(cx-5*s)+" "+(cy-8*s)+"H"+(cx+5*s),stroke:"url(#chairG)","stroke-width":1.4*s,fill:"none"},g);}
+    // skirt
+    el("path",{d:"M"+(x-44*s)+" "+y+"C"+(x-46*s)+" "+(y+12*s)+" "+(x-48*s)+" "+(y+22*s)+" "+(x-46*s)+" "+(y+28*s)+"Q"+x+" "+(y+42*s)+" "+(x+46*s)+" "+(y+28*s)+"C"+(x+48*s)+" "+(y+22*s)+" "+(x+46*s)+" "+(y+12*s)+" "+(x+44*s)+" "+y+"Z",fill:"url(#clothG)"},g);
+    for(var f=-3;f<=3;f++)el("path",{d:"M"+(x+f*12*s)+" "+(y+10*s)+"q"+(f*1.5*s)+" "+(14*s)+" "+(f*2*s)+" "+(26*s),stroke:"#a8988a","stroke-width":.8,opacity:.6,fill:"none"},g);
+    el("ellipse",{cx:x,cy:y,rx:44*s,ry:12*s,fill:"url(#topG)"},g);
+    // runner
+    el("ellipse",{cx:x,cy:y,rx:30*s,ry:7*s,fill:"none",stroke:"#d6b26c","stroke-opacity":.5,"stroke-width":.8},g);
+    // plates
+    for(var p=0;p<8;p++){var pa=p/8*Math.PI*2;el("ellipse",{cx:x+Math.cos(pa)*34*s,cy:y+Math.sin(pa)*8.5*s,rx:4.2*s,ry:1.6*s,fill:"#fff",stroke:"#d6b26c","stroke-width":.4},g)}
+    // centerpiece: tall candelabra with flowers
+    el("path",{d:"M"+x+" "+y+"V"+(y-30*s)+"M"+(x-9*s)+" "+(y-22*s)+"Q"+x+" "+(y-16*s)+" "+(x+9*s)+" "+(y-22*s),stroke:"#d6b26c","stroke-width":1.2*s,fill:"none"},g);
+    [-9,0,9].forEach(function(dx){var cy=dx?y-26*s:y-34*s;el("circle",{cx:x+dx*s,cy:cy-4*s,r:7*s,fill:"url(#candleG)"},g);el("rect",{x:x+dx*s-1*s,y:cy-2*s,width:2*s,height:5*s,fill:"#fff7e8"},g)});
+    [["#7d2442",-6,-3],["#a8325a",4,-2],["#f2dda4",0,-5],["#7d2442",8,-4],["#5a1430",-9,-1]].forEach(function(fw){el("circle",{cx:x+fw[1]*s,cy:y+fw[2]*s,r:3.6*s,fill:fw[0]},g)});
+    // front chairs
+    for(var b=1;b<9;b++){var ang2=b/9*Math.PI;var fx=x+Math.cos(ang2)*54*s,fy=y+Math.sin(ang2)*18*s+8*s;
+      el("path",{d:"M"+(fx-5*s)+" "+(fy+14*s)+"V"+(fy-4*s)+"M"+(fx+5*s)+" "+(fy+14*s)+"V"+(fy-4*s)+"M"+(fx-6*s)+" "+(fy+4*s)+"H"+(fx+6*s),stroke:"url(#chairG)","stroke-width":1.4*s,fill:"none"},g);}
+    // QR display
+    el("rect",{x:x+16*s,y:y-14*s,width:10*s,height:12*s,rx:1,fill:"#1a0c18",stroke:"#d6b26c","stroke-width":.6},g);
+    el("rect",{x:x+18*s,y:y-12*s,width:6*s,height:6*s,fill:"#f6eee2"},g);
+    return g;
+  };
+  var giftTable=function(){
+    var g=el("g",{},SC),x=60,y=360;
+    el("ellipse",{cx:x+70,cy:y+50,rx:90,ry:12,fill:"#000",opacity:.4,filter:"url(#soft2)"},g);
+    el("path",{d:"M"+x+" "+y+"h140l6 44H"+(x-6)+"z",fill:"url(#clothG)"},g);
+    el("rect",{x:x,y:y-6,width:140,height:8,fill:"#fff8ee"},g);
+    el("path",{d:"M"+(x-6)+" "+(y+44)+"h152",stroke:"#d6b26c"},g);
+    [[x+12,y-30,26,24,"#7d2442"],[x+44,y-44,34,38,"#d6b26c"],[x+84,y-26,24,20,"#2b1628"],[x+110,y-36,22,30,"#f2dda4"],[x+30,y-18,18,12,"#a8325a"]].forEach(function(b){
+      el("rect",{x:b[0],y:b[1],width:b[2],height:b[3],fill:b[4],stroke:"#120a10","stroke-width":.6},g);
+      el("path",{d:"M"+(b[0]+b[2]/2)+" "+b[1]+"v"+b[3]+"M"+b[0]+" "+(b[1]+b[3]/2.4)+"h"+b[2],stroke:b[4]==="#d6b26c"||b[4]==="#f2dda4"?"#7d2442":"#d6b26c","stroke-width":1.4},g);
+      el("path",{d:"M"+(b[0]+b[2]/2)+" "+b[1]+"c-6-6-10 0-2 0c8 0 4-6-2 0",stroke:"#d6b26c",fill:"none"},g);
+    });
+    el("rect",{x:x+118,y:y-14,width:16,height:12,rx:1,fill:"#1a0c18",stroke:"#d6b26c","stroke-width":.6},g);
+  };
+  var reception=function(){
+    var g=el("g",{},SC);
+    el("path",{d:"M880 620V470q50-60 100 0v150",fill:"#060406",stroke:"#8a6a32","stroke-width":2},g);
+    el("path",{d:"M880 470q50-60 100 0",fill:"none",stroke:"#d6b26c","stroke-width":1},g);
+    el("ellipse",{cx:830,cy:560,rx:40,ry:8,fill:"#000",opacity:.45,filter:"url(#soft2)"},g);
+    el("rect",{x:806,y:470,width:48,height:90,rx:4,fill:"#241626",stroke:"#d6b26c"},g);
+    el("rect",{x:812,y:478,width:36,height:40,rx:2,fill:"#1a0c18"},g);
+    el("text",{x:830,y:492,"text-anchor":"middle","font-family":"Cinzel, serif","font-size":6,fill:"#f2dda4"},g).textContent="BEM-VINDOS";
+    el("rect",{x:820,y:496,width:20,height:20,fill:"#f6eee2"},g);
+    el("path",{d:"M823 499h5v5h-5zM832 499h5v5h-5zM823 508h5v5h-5zM832 508h3v3h-3z",fill:"#1a0c18"},g);
+    el("rect",{x:814,y:526,width:32,height:4,rx:2,fill:"#d6b26c",opacity:.6},g);
+    // hostess
+    person.call(null,780,560,1.05,"#1d1420","#d6b26c","#2a1418");
+    D.lastChild&&SC.appendChild(D.lastChild);
+    el("rect",{x:786,y:516,width:10,height:14,rx:1.5,fill:"#2a1b2c",stroke:"#f2dda4","stroke-width":.6},g);
+  };
+  var familyTable=function(){
+    var g=el("g",{},SC);
+    el("ellipse",{cx:500,cy:606,rx:170,ry:14,fill:"#000",opacity:.5,filter:"url(#soft2)"},g);
+    for(var c=0;c<7;c++){var cx=380+c*40;el("path",{d:"M"+(cx-7)+" 560V530M"+(cx+7)+" 560V530M"+(cx-7)+" 530H"+(cx+7)+"M"+(cx-7)+" 540H"+(cx+7)+"M"+(cx-7)+" 550H"+(cx+7),stroke:"url(#chairG)","stroke-width":2,fill:"none"},g)}
+    el("path",{d:"M340 562H660L672 610H328Z",fill:"url(#clothG)"},g);
+    el("rect",{x:340,y:556,width:320,height:10,fill:"#fff8ee"},g);
+    el("path",{d:"M352 566q74 22 148 0q74 22 148 0",stroke:"#d6b26c","stroke-width":1.5,fill:"none"},g);
+    [380,620].forEach(function(cx){el("circle",{cx:cx,cy:540,r:12,fill:"url(#candleG)"},g);el("path",{d:"M"+cx+" 556v-12",stroke:"#d6b26c","stroke-width":2},g)});
+    [["#7d2442",470,548],["#a8325a",484,545],["#f2dda4",498,543],["#7d2442",512,546],["#5a1430",526,549],["#a8325a",492,552],["#7d2442",506,552]].forEach(function(f){el("circle",{cx:f[1],cy:f[2],r:6,fill:f[0]},g)});
+    // tablet/panel
+    el("rect",{x:560,y:540,width:30,height:20,rx:2,fill:"#120a10",stroke:"#d6b26c"},g);
+    el("rect",{x:563,y:543,width:24,height:14,fill:"#2a1b2c"},g);
+    el("path",{d:"M566 553l4-4 3 3 5-6 6 7",stroke:"#4fd1a5","stroke-width":1,fill:"none"},g);
+  };
+  var guestPhone=function(){
+    person(905,420,1.15,"#7d2442","#d6b26c","#2a1418");
+    var g=D.lastChild;SC.appendChild(g);
+    el("rect",{x:912,y:345,width:11,height:19,rx:2,fill:"#120a10",stroke:"#f2dda4","stroke-width":.8},g);
+    el("rect",{x:913.5,y:347,width:8,height:14,fill:"#4fd1a5",opacity:.7},g);
+    el("circle",{cx:918,cy:354,r:16,fill:"#4fd1a5",opacity:.15,filter:"url(#soft2)"},g);
+    el("path",{d:"M908 372l6-12",stroke:"#c99a80","stroke-width":4,"stroke-linecap":"round"},g);
+  };
+  giftTable();
+  [[180,350,.78],[820,350,.78],[300,460,.95],[700,460,.95],[110,470,1],[890,470,0]].forEach(function(t){if(t[2])table(t[0],t[1],t[2])});
+  guestPhone();
+  reception();
+  familyTable();
+
+  // hotspots
+  var HOTS=[
+    {id:"telao",x:500,y:150,label:"Telão",icon:"i-tv",tag:"Mural ao vivo · Baile Completo",title:"As fotos dos convidados, ao vivo no telão",
+      body:"Cada foto enviada passa por uma aprovação rápida no painel da família e entra num carrossel animado com a moldura do baile. Funciona em qualquer telão ou TV com navegador.",
+      list:["Atualiza sozinho durante a festa","Família aprova antes de exibir","Moldura e transições no tema máscaras"]},
+    {id:"mesa",x:300,y:430,label:"Mesas",icon:"i-qr",tag:"Displays com QR code · Baile Completo",title:"Uma plaquinha em cada mesa",
+      body:"Inspirada nas câmeras descartáveis de casamento: o convidado aponta o celular para o QR code e entra direto no modo festa do convite.",
+      list:["Arte dos displays inclusa","Mesmo link do convite, sem baixar aplicativo"]},
+    {id:"convidado",x:918,y:330,label:"Convidado",icon:"i-camera",tag:"Câmera do Baile · Baile Completo",title:"A câmera descartável digital",
+      body:"Cada convidado tem 24 poses, com moldura de máscara. As fotos ficam guardadas e só são reveladas para todos no dia seguinte, como um filme.",
+      list:["Também aceita fotos da galeria do celular","Sem cadastro e sem senha"]},
+    {id:"presentes",x:130,y:300,label:"Presentes",icon:"i-gift",tag:"Lista de presentes e PIX · todos os pacotes",title:"Presentear em dois toques",
+      body:"Itens ou cotas com valor, pagos por PIX copia-e-cola ou QR code direto na conta da família. Tudo aparece no painel.",
+      list:["Itens reais ou presente digital em cotas","Mensagem junto com o presente"]},
+    {id:"recepcao",x:830,y:452,label:"Recepção",icon:"i-users",tag:"Confirmação de presença · todos os pacotes",title:"Lista de convidados sempre atualizada",
+      body:"Quem confirma pelo convite entra na lista na hora. A recepção recebe a lista pronta, com acompanhantes e restrições alimentares.",
+      list:["Confirmação por família ou por pessoa","Exportação para planilha"]},
+    {id:"familia",x:575,y:520,label:"Família",icon:"i-layout",tag:"Painel da família · todos os pacotes",title:"Tudo num painel só",
+      body:"Confirmações, presentes, recados e fotos reunidos num painel simples, que funciona no celular.",
+      list:["Aprovação de recados e fotos","Liberação da galeria com um toque","Download do álbum completo"]},
+    {id:"pista",x:500,y:350,label:"Pista",icon:"i-heart",tag:"História e galeria · Encantar e Baile Completo",title:"Antes da valsa, a história; depois, a lembrança",
+      body:"Antes da festa, o convite conta a trajetória da debutante numa linha do tempo. Depois, os melhores momentos da pista viram uma página de agradecimento.",
+      list:["Linha do tempo com fotos","Página de agradecimento pós-festa"]}
+  ];
+  var hots=document.getElementById("hots"),legend=document.getElementById("legend"),info=document.getElementById("info"),seen={};
+  var show=function(h){
+    seen[h.id]=true;
+    document.querySelectorAll(".hot").forEach(function(n){n.classList.toggle("on",n.dataset.id===h.id);if(seen[n.dataset.id])n.classList.add("seen")});
+    legend.querySelectorAll("button").forEach(function(b){b.classList.toggle("on",b.dataset.id===h.id);if(seen[b.dataset.id])b.classList.add("seen")});
+    var n=Object.keys(seen).length;
+    info.innerHTML="<span class='tag'><svg class='ico'><use href='#"+h.icon+"'/></svg><span></span></span><h3></h3><p class='muted b'></p><ul></ul><div class='prog'><div class='bar'><i id='pbar'></i></div><span id='found'></span></div>";
+    info.querySelector(".tag span").textContent=h.tag;info.querySelector("h3").textContent=h.title;info.querySelector(".b").textContent=h.body;
+    var ul=info.querySelector("ul");h.list.forEach(function(t){var li=document.createElement("li");li.innerHTML="<svg class='ico'><use href='#i-tick'/></svg><span></span>";li.lastChild.textContent=t;ul.appendChild(li)});
+    info.querySelector("#found").textContent=n+" de "+HOTS.length+" descobertos"+(n===HOTS.length?" · você conheceu o baile inteiro":"");
+    var bar=info.querySelector("#pbar");bar.style.setProperty("--p",(n-1)/HOTS.length);requestAnimationFrame(function(){requestAnimationFrame(function(){bar.style.setProperty("--p",n/HOTS.length)})});
+  };
+  HOTS.forEach(function(h,i){
+    var g=el("g",{"class":"hot",tabindex:0,role:"button","aria-label":h.label},hots);g.dataset.id=h.id;
+    el("circle",{"class":"pulse",cx:h.x,cy:h.y,r:14,style:"animation-delay:"+(i*.3)+"s"},g);
+    el("circle",{"class":"core-c",cx:h.x,cy:h.y,r:14},g);
+    el("path",{"class":"plus-i",d:"M"+(h.x-5)+" "+h.y+"h10M"+h.x+" "+(h.y-5)+"v10"},g);
+    g.addEventListener("click",function(){show(h)});
+    g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();show(h)}});
+    var b=document.createElement("button");b.type="button";b.dataset.id=h.id;b.innerHTML="<svg class='ico'><use href='#"+h.icon+"'/></svg><span></span>";b.lastChild.textContent=h.label;b.addEventListener("click",function(){show(h)});legend.appendChild(b);
+  });
+
+  /* slides nav */
+  var slides=[].slice.call(document.querySelectorAll(".slide")),dots=document.querySelector(".dots");
+  document.getElementById("tot").textContent=String(slides.length).padStart(2,"0");
+  var go=function(i){slides[i].scrollIntoView({behavior:reduce?"auto":"smooth"})};
+  slides.forEach(function(s,i){var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Ir para "+s.getAttribute("aria-label"));b.addEventListener("click",function(){go(i)});dots.appendChild(b)});
+  var cur=0,setCur=function(i){cur=i;document.getElementById("cur").textContent=String(i+1).padStart(2,"0");dots.querySelectorAll("button").forEach(function(b,j){b.setAttribute("aria-current",String(i===j))})};
+  setCur(0);
+  document.getElementById("cue").addEventListener("click",function(){go(1)});
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=slides.indexOf(e.target);setCur(i);if(!e.target.dataset.played){e.target.dataset.played="1";e.target.classList.add("play")}}})},{threshold:.5});
+    slides.forEach(function(s){io.observe(s)});
+  }
+  document.addEventListener("keydown",function(e){
+    if(e.target.closest&&e.target.closest(".hot,button,input,[role=tab]"))return;
+    var k=e.key,n=null;
+    if(k==="ArrowDown"||k==="PageDown"||k==="ArrowRight")n=Math.min(cur+1,slides.length-1);
+    if(k==="ArrowUp"||k==="PageUp"||k==="ArrowLeft")n=Math.max(cur-1,0);
+    if(n!==null){e.preventDefault();go(n)}
+  });
+
+  /* back-to-top: shows on the last slide */
+  var toTop=document.getElementById("totop"),last=slides[slides.length-1];
+  toTop.addEventListener("click",function(){go(0)});
+  if("IntersectionObserver" in window)new IntersectionObserver(function(es){es.forEach(function(e){toTop.classList.toggle("on",e.isIntersecting)})},{threshold:.25}).observe(last);
+  else toTop.classList.add("on");
+
+  /* videos: pause offscreen to save battery */
+  var vids=[].slice.call(document.querySelectorAll("video"));
+  /* decorative loops play even with reduced motion / low-power mode; muted+inline so mobile allows autoplay */
+  var tryPlay=function(v){if(!v.paused)return;v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute("muted","");v.setAttribute("playsinline","");v.setAttribute("webkit-playsinline","");var p=v.play();if(p&&p.catch)p.catch(function(){})};
+  var visible=[];
+  if("IntersectionObserver" in window){
+    var vio=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){if(visible.indexOf(v)<0)visible.push(v);tryPlay(v)}else{visible=visible.filter(function(x){return x!==v});v.pause()}})},{threshold:.01});
+    vids.forEach(function(v){v.preload="auto";vio.observe(v)});
+  }else vids.forEach(tryPlay);
+  /* some phones (iOS low-power, in-app browsers) only allow play after a touch: retry on first interactions */
+  var kick=function(){(visible.length?visible:vids).forEach(tryPlay)};
+  ["touchstart","touchend","click","scroll"].forEach(function(ev){document.addEventListener(ev,kick,{passive:true,capture:true})});
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)kick()});
+
+  /* sparkles */
+  var cv=document.querySelector(".sparkles"),ctx=cv.getContext&&cv.getContext("2d");
+  if(ctx){
+    var W,H,P=[],dpr=Math.min(window.devicePixelRatio||1,2);
+    var size=function(){var r=cv.parentElement.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+"px";cv.style.height=H+"px";ctx.setTransform(dpr,0,0,dpr,0,0)};
+    size();window.addEventListener("resize",size);
+    for(var q=0;q<90;q++)P.push({x:Math.random(),y:Math.random(),r:Math.random()*1.5+.3,s:Math.random()*.0005+.00015,p:Math.random()*6});
+    var draw=function(t){ctx.clearRect(0,0,W,H);
+      P.forEach(function(o){var a=.2+.6*Math.abs(Math.sin(t/1000+o.p));ctx.fillStyle="rgba(242,221,164,"+a.toFixed(2)+")";ctx.beginPath();ctx.arc(o.x*W,o.y*H,o.r,0,7);ctx.fill();o.y-=o.s;if(o.y<0)o.y=1});
+      requestAnimationFrame(draw)};
+    requestAnimationFrame(draw);
+  }
+})();
+</script>
+
+</body>
+</html>
